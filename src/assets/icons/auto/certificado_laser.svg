@@ -1,0 +1,108 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="133" height="65" viewBox="0 0 133 65">
+  <defs>
+    <path id="certificado_laser-a" d="M3.66666667,0 L55.9166667,0 L55.9166667,64 L3.66666667,64 C1.64162258,64 8.28608938e-15,62.3583774 4.4408921e-15,60.3333333 L0,3.66666667 C-2.47996375e-16,1.64162258 1.64162258,1.26017298e-15 3.66666667,8.8817842e-16 Z"/>
+    <path id="certificado_laser-b" d="M3.66666667,0 L55.9166667,0 L55.9166667,27.4285714 L0,27.4285714 L0,3.66666667 C-2.47996375e-16,1.64162258 1.64162258,1.26017298e-15 3.66666667,8.8817842e-16 Z"/>
+    <path id="certificado_laser-c" d="M3.66666667,0 L27.5,0 C29.5250441,-3.71994563e-16 31.1666667,1.64162258 31.1666667,3.66666667 L31.1666667,27.4285714 L0,27.4285714 L0,3.66666667 C-2.47996375e-16,1.64162258 1.64162258,1.26017298e-15 3.66666667,8.8817842e-16 Z"/>
+    <rect id="certificado_laser-d" width="25.667" height="18.286" y="26.514"/>
+    <rect id="certificado_laser-e" width="31.167" height="18.286" x="24.75" y="26.514"/>
+    <rect id="certificado_laser-f" width="55" height="64" x="55" rx="3.667"/>
+    <path id="certificado_laser-g" d="M58.6666667,53.9428571 L106.333333,53.9428571 C108.358377,53.9428571 110,55.5844797 110,57.6095238 L110,60.3333333 C110,62.3583774 108.358377,64 106.333333,64 L55,64 L55,57.6095238 C55,55.5844797 56.6416226,53.9428571 58.6666667,53.9428571 Z"/>
+    <rect id="certificado_laser-h" width="13.75" height="10.057"/>
+    <rect id="certificado_laser-i" width="14.667" height="10.057" x="12.833"/>
+    <rect id="certificado_laser-j" width="14.667" height="10.057" x="26.583"/>
+    <rect id="certificado_laser-k" width="14.667" height="10.057" x="40.333"/>
+    <path id="certificado_laser-l" d="M55,0 L106.333333,4.4408921e-16 C108.358377,7.20946467e-17 110,1.64162258 110,3.66666667 L110,7.31428571 L55,7.31428571 L55,0 Z"/>
+    <path id="certificado_laser-m" d="M3.66666667,0 L55.9166667,0 L55.9166667,7.31428571 L0,7.31428571 L0,3.66666667 C-2.47996375e-16,1.64162258 1.64162258,3.71994563e-16 3.66666667,0 Z"/>
+    <rect id="certificado_laser-n" width="55" height="23.771" x="55" y="6.4"/>
+  </defs>
+  <g fill="none" fill-rule="evenodd" transform="translate(1)">
+    <path stroke="#806EA0" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M0.5,63.5 L130.515384,63.5"/>
+    <g transform="translate(10)">
+      <use fill="#F2F2F2" xlink:href="#certificado_laser-a"/>
+      <path stroke="#806EA0" stroke-width=".917" d="M55.4583333,63.5416667 L55.4583333,0.458333333 L3.66666667,0.458333333 C1.89475309,0.458333333 0.458333333,1.89475309 0.458333333,3.66666667 L0.458333333,60.3333333 C0.458333333,62.1052469 1.89475309,63.5416667 3.66666667,63.5416667 L55.4583333,63.5416667 Z"/>
+      <use fill="#FFF" xlink:href="#certificado_laser-b"/>
+      <path stroke="#806EA0" stroke-width=".917" d="M0.458333333,26.9702381 L55.4583333,26.9702381 L55.4583333,0.458333333 L3.66666667,0.458333333 C1.89475309,0.458333333 0.458333333,1.89475309 0.458333333,3.66666667 L0.458333333,26.9702381 Z"/>
+      <use fill="#FFF" xlink:href="#certificado_laser-c"/>
+      <path stroke="#806EA0" stroke-width=".917" d="M0.458333333,26.9702381 L30.7083333,26.9702381 L30.7083333,3.66666667 C30.7083333,1.89475309 29.2719136,0.458333333 27.5,0.458333333 L3.66666667,0.458333333 C1.89475309,0.458333333 0.458333333,1.89475309 0.458333333,3.66666667 L0.458333333,26.9702381 Z"/>
+      <use fill="#F2F2F2" xlink:href="#certificado_laser-d"/>
+      <rect width="24.75" height="17.369" x=".458" y="26.973" stroke="#806EA0" stroke-width=".917"/>
+      <use fill="#F2F2F2" xlink:href="#certificado_laser-e"/>
+      <rect width="30.25" height="17.369" x="25.208" y="26.973" stroke="#806EA0" stroke-width=".917"/>
+      <use fill="#F2F2F2" xlink:href="#certificado_laser-f"/>
+      <rect width="54.083" height="63.083" x="55.458" y=".458" stroke="#806EA0" stroke-width=".917" rx="3.667"/>
+      <use fill="#F2F2F2" xlink:href="#certificado_laser-g"/>
+      <path stroke="#806EA0" stroke-width=".917" d="M55.4583333,63.5416667 L106.333333,63.5416667 C108.105247,63.5416667 109.541667,62.1052469 109.541667,60.3333333 L109.541667,57.6095238 C109.541667,55.8376102 108.105247,54.4011905 106.333333,54.4011905 L58.6666667,54.4011905 C56.8947531,54.4011905 55.4583333,55.8376102 55.4583333,57.6095238 L55.4583333,63.5416667 Z"/>
+      <g transform="translate(55 48.457)">
+        <use fill="#F2F2F2" xlink:href="#certificado_laser-h"/>
+        <rect width="12.833" height="9.14" x=".458" y=".458" stroke="#806EA0" stroke-width=".917"/>
+        <use fill="#F2F2F2" xlink:href="#certificado_laser-i"/>
+        <rect width="13.75" height="9.14" x="13.292" y=".458" stroke="#806EA0" stroke-width=".917"/>
+        <g>
+          <use fill="#F2F2F2" xlink:href="#certificado_laser-j"/>
+          <rect width="13.75" height="9.14" x="27.042" y=".458" stroke="#806EA0" stroke-width=".917"/>
+        </g>
+        <g>
+          <use fill="#F2F2F2" xlink:href="#certificado_laser-k"/>
+          <rect width="13.75" height="9.14" x="40.792" y=".458" stroke="#806EA0" stroke-width=".917"/>
+        </g>
+      </g>
+      <use fill="#FFF" xlink:href="#certificado_laser-l"/>
+      <path stroke="#806EA0" stroke-width=".917" d="M55.4583333,0.458333333 L55.4583333,6.85595238 L109.541667,6.85595238 L109.541667,3.66666667 C109.541667,1.89475309 108.105247,0.458333333 106.333333,0.458333333 L55.4583333,0.458333333 Z"/>
+      <use fill="#FFF" xlink:href="#certificado_laser-m"/>
+      <path stroke="#806EA0" stroke-width=".917" d="M0.458333333,6.85595238 L55.4583333,6.85595238 L55.4583333,0.458333333 L3.66666667,0.458333333 C1.89475309,0.458333333 0.458333333,1.89475309 0.458333333,3.66666667 L0.458333333,6.85595238 Z"/>
+      <g transform="matrix(1 0 0 -1 0 36.571)">
+        <use fill="#F2F2F2" xlink:href="#certificado_laser-n"/>
+        <rect width="54.083" height="22.855" x="55.458" y="6.858" stroke="#806EA0" stroke-width=".917"/>
+      </g>
+      <rect width="25.667" height="7.314" x="2.75" y="9.143" fill="#806EA0"/>
+      <rect width="17.417" height="3.657" x="2.75" y="1.829" fill="#806EA0"/>
+      <rect width="12.833" height="9.143" x="36.667" y="11.886" fill="#806EA0" rx="1.833"/>
+      <rect width="25.667" height="1.829" x="2.75" y="17.371" fill="#806EA0"/>
+      <rect width="25.667" height="1.829" x="70.583" y="2.743" fill="#806EA0"/>
+      <rect width="31.167" height="1" x="22" y="1.829" fill="#806EA0"/>
+      <rect width="31.167" height="1" x="22" y="3.657" fill="#806EA0"/>
+      <rect width="45.833" height="1" x="59.583" y="32" fill="#806EA0"/>
+      <rect width="45.833" height="1" x="59.583" y="33.829" fill="#806EA0"/>
+      <rect width="45.833" height="1" x="59.583" y="59.429" fill="#806EA0"/>
+      <rect width="18.333" height="1" x="59.583" y="61.257" fill="#806EA0"/>
+      <rect width="45.833" height="1" x="59.583" y="35.657" fill="#806EA0"/>
+      <rect width="16.5" height="1" x="59.583" y="37.486" fill="#806EA0"/>
+      <rect width="16.5" height="1" x="59.583" y="44.8" fill="#806EA0"/>
+      <rect width="16.5" height="1" x="88.917" y="44.8" fill="#806EA0"/>
+      <rect width="25.667" height="1.829" x="2.75" y="47.543" fill="#806EA0"/>
+      <rect width="18.333" height="1.829" x="2.75" y="51.2" fill="#806EA0"/>
+      <rect width="18.333" height="1.829" x="30.25" y="51.2" fill="#806EA0"/>
+      <rect width="18.333" height="1.829" x="59.583" y="10.057" fill="#806EA0"/>
+      <rect width="18.333" height="1.829" x="87.083" y="10.057" fill="#806EA0"/>
+      <rect width="18.333" height="1.829" x="59.583" y="14.629" fill="#806EA0"/>
+      <rect width="18.333" height="1.829" x="87.083" y="14.629" fill="#806EA0"/>
+      <rect width="18.333" height="1.829" x="59.583" y="19.2" fill="#806EA0"/>
+      <rect width="18.333" height="1.829" x="87.083" y="19.2" fill="#806EA0"/>
+      <rect width="18.333" height="1.829" x="59.583" y="23.771" fill="#806EA0"/>
+      <rect width="18.333" height="1.829" x="87.083" y="23.771" fill="#806EA0"/>
+      <rect width="22" height="1.829" x="2.75" y="54.857" fill="#806EA0"/>
+      <rect width="13.75" height="1.829" x="2.75" y="58.514" fill="#806EA0"/>
+      <rect width="13.75" height="1.829" x="39.417" y="58.514" fill="#806EA0"/>
+      <rect width="13.75" height="1.829" x="21.083" y="58.514" fill="#806EA0"/>
+      <rect width="16.5" height="1.829" x="2.75" y="20.114" fill="#806EA0"/>
+      <rect width="16.5" height="1.829" x="4.583" y="29.257" fill="#806EA0"/>
+      <rect width="5.5" height="1.829" x="2.75" y="32.914" fill="#806EA0"/>
+      <rect width="10.083" height="1.829" x="12.833" y="32.914" fill="#806EA0"/>
+      <rect width="5.5" height="1.829" x="2.75" y="36.571" fill="#806EA0"/>
+      <rect width="10.083" height="1.829" x="12.833" y="36.571" fill="#806EA0"/>
+      <rect width="5.5" height="1.829" x="27.5" y="32.914" fill="#806EA0"/>
+      <rect width="10.083" height="1.829" x="43.083" y="32.914" fill="#806EA0"/>
+      <rect width="5.5" height="1.829" x="27.5" y="36.571" fill="#806EA0"/>
+      <rect width="10.083" height="1.829" x="43.083" y="36.571" fill="#806EA0"/>
+      <rect width="16.5" height="1.829" x="32.083" y="29.257" fill="#806EA0"/>
+      <rect width="7.333" height="1.829" x="71.5" y="53.943" fill="#806EA0"/>
+      <rect width="11" height="1.829" x="69.667" y="50.286" fill="#806EA0"/>
+      <rect width="7.333" height="1.829" x="85.25" y="53.943" fill="#806EA0"/>
+      <rect width="11" height="1.829" x="83.417" y="50.286" fill="#806EA0"/>
+      <rect width="7.333" height="1.829" x="99" y="53.943" fill="#806EA0"/>
+      <rect width="11" height="1.829" x="97.167" y="50.286" fill="#806EA0"/>
+      <rect width="22.917" height="1.829" x="2.75" y="22.857" fill="#806EA0"/>
+      <ellipse cx="61.875" cy="53.486" fill="#806EA0" rx="3.208" ry="3.2"/>
+    </g>
+  </g>
+</svg>

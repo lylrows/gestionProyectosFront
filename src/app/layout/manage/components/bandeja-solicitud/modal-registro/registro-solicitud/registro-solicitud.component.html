@@ -1,0 +1,176 @@
+<div class="modal-header">
+    <div class="content-header-left col-md-6 col-6">
+      <h3>{{title}} Solicitud</h3>
+    </div>
+</div>
+<div class="modal-body" style="justify-content: center;">
+  <!-- INICIO Filtro -->
+  
+  <div class="row">
+    <div class="col-12">
+      <div class="card">
+        <div class="card-header">
+          <!-- <h2 class="text-center">{{title}} Solicitud</h2> -->
+          <!-- {{tituloProject}} -->
+          <!-- <h4 class="card-title"> Detalle del registro de hora </h4> -->
+          <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
+        </div>
+        <div class="card-content collapse show">
+          <div class="card-body">
+            <div class="form-body">
+              <div class="row">
+                <div class="form-group col-md-1 col-sm-12">
+                </div>
+                <div class="form-group col-md-3 col-sm-12">
+                  <label>Cod. Solicitud</label>
+                  <input [disabled]="true" type="text" name="" id="" class="form-control"  max="24" min="0" [(ngModel)]="requestmanagement.cod_request">
+                </div>
+                <div class="form-group col-md-3 col-sm-12">
+                </div>
+                <div class="form-group col-md-3 col-sm-12">
+                  <label >Fecha de registro</label>
+                  <input [disabled]="true" type="date" class="form-control" [(ngModel)]="dateString">
+
+                  <!-- <div class="input-group input-daterange">
+                    <input [disabled]="(!registroBloque)" type="date" class="form-control" [(ngModel)]="dateString" (blur)="cambioFechaInicio()" >
+                    <div *ngIf="registroBloque" class="input-group-addon">hasta</div>
+                    <input *ngIf="registroBloque" type="date" class="form-control" [(ngModel)]="dateRangeString" (blur)="cambioFechaFin()">
+                  </div> -->
+                </div>
+              </div>
+              <div class="row">
+                <div class="form-group col-md-1 col-sm-12">
+                </div>
+                <div class="form-group col-md-4 col-sm-12">
+                  <label>Proyecto</label>
+                  <select class="select2 form-control block" [(ngModel)]="requestmanagement.nid_project" (change)="getPersonsEstimate(requestmanagement.nid_project)">
+                    <option value="0" >--Seleccione--</option>
+                    <option *ngFor="let item of allProjects" [value]="item.nid_project">
+                      {{item.scodproject}}: {{item.snameproject}}
+                    </option>
+                  </select>
+                </div>
+                <div class="form-group col-md-4 col-sm-12">
+                  <label>Estado</label>
+                  <select class="select2 form-control block"  required [(ngModel)]="requestmanagement.nid_state" [disabled]="(nid_job!=1046)">
+                    <option value="0">-- Seleccione --</option>
+                    <option *ngFor="let item of listState" [value]="item.nid_mastertable_type" >
+                      {{item.sshort_value}}
+                    </option>
+                  </select>
+                </div>
+                <!-- <div class="form-group col-md-3 col-sm-12" >
+                    <label >Responsable</label>
+                    <input [disabled]="true" type="text" class="form-control" [(ngModel)]="project.nid_manager">
+                    
+                  </div> -->
+                <!-- <div class="form-group col-md-1 col-sm-12">
+                </div> -->
+              </div>
+              <!-- <div class="row">
+                <div class="form-group col-md-1 col-sm-12">
+                </div>
+                <div class="form-group col-md-6 col-sm-12">
+                  <label>Estado</label>
+                  <select class="select2 form-control block"  required [(ngModel)]="requestmanagement.nid_state" [disabled]="!isAdmin">
+                    <option value="0">-- Seleccione --</option>
+                    <option *ngFor="let item of listState" [value]="item.nid_mastertable" >
+                      {{item.sshort_value}}
+                    </option>
+                  </select>
+                </div>
+              </div> -->
+              <div class="row">
+                <div class="form-group col-md-1 col-sm-12">
+                </div>
+                <div class="form-group col-md-4 col-sm-12">
+                  <label >Módulo</label>
+                  <select class="select2 form-control block" [(ngModel)]="requestmanagement.nidresource">
+                    <option value="0" >Otro</option>
+                    <option *ngFor="let item of allViews" [value]="item.nidresource">
+                      {{item.sdescription}}
+                    </option>
+                  </select>
+                </div>
+                <div class="form-group col-md-4 col-sm-12">
+                  <label>Otro</label>
+                  <input type="text" class="form-control" [(ngModel)]="requestmanagement.module" [disabled]="(requestmanagement.nidresource!=0)">
+                </div>
+              </div>
+              <div class="row">
+                <div class="form-group col-md-1 col-sm-12">
+                </div>
+                <div class="form-group col-md-4 col-sm-12">
+                  <label>Fecha de Permiso</label>
+                  <div class="input-group input-daterange">
+                    <input [disabled]="(requestmanagement.nidresource!=11)" type="date" class="form-control" [(ngModel)]="dateStringp" >
+                    <!-- <div class="input-group-addon">hasta</div>
+                    <input [disabled]="(requestmanagement.nidresource!=11)" type="date" class="form-control" [(ngModel)]="dateRangeString" (blur)="cambioFechaFin()"> -->
+                  </div>
+                </div>
+                <div class="form-group col-md-4 col-sm-12">
+                  <label>Número de Horas Extras</label>
+                  <input [disabled]="(requestmanagement.nidresource!=11)" type="number" class="form-control" [(ngModel)]="managementpermission.numhours">
+                </div>
+              </div>
+              <div class="row">
+                <div class="form-group col-md-1 col-sm-12">
+                </div>
+                <div class="form-group col-md-4 col-sm-12">
+                  <label>Lista de Colaboradores</label>
+                  <select [disabled]="(requestmanagement.nidresource!=11)" class="select2 form-control block" [(ngModel)]="this.managementpermission.nid_person">
+                    <option value="0" >--Seleccione--</option>
+                    <option *ngFor="let item of listPersonEstimate" [value]="item.nid_person">
+                      {{item.sperson}}
+                    </option>
+                  </select>
+                </div>
+              </div>
+              <div class="row">
+                <div class="form-group col-md-1 col-sm-12">
+                </div>
+                <div class="form-group col-md-9 col-sm-12">
+                  <label > Observación </label>
+                  <!-- <input type="text" name="" id="" class="form-control" [(ngModel)]="projectHoursLog.sdescription"> -->
+                  <textarea type="text" name="" id="" class="form-control" [(ngModel)]="requestmanagement.obs"></textarea>
+                </div>
+                <!-- <div class="form-group col-md-1 col-sm-12">
+                </div> -->
+              </div>
+
+            
+            </div>
+          </div>
+
+          
+
+        </div>
+      </div>
+    </div>
+    
+  </div>
+  <!-- FIN Filtro -->
+  <!-- FIN Tabla Tabla Listado de Errores -->
+  
+</div>
+<div class="modal-footer">
+  <div class="container">
+    <div class="row" style="justify-content: center;">
+      <div *ngIf="isAdmin || !active" class="col-md-3 col-sm-1">
+        <button type="button" class="btn btn-outline-info btn-active"  (click)="saveRequest()">
+          <i class="la la-file-o"></i>&nbsp;{{tituloBoton}}
+        </button>
+      </div>
+      
+      <div class="col-md-3 col-sm-1">
+        <button (click)="closeModal()" class="btn btn-outline-info btn-active">
+          <i class="la la-close"></i>&nbsp;Cerrar
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<iframe id="ifrmTemplate" name="ifrmTemplate" style="display: none;"></iframe>
+<a id="afile" name="afile" style="display: none;"></a>
+
+<ngx-spinner></ngx-spinner>

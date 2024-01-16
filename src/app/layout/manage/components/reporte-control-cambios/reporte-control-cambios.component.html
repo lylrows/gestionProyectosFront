@@ -1,0 +1,52 @@
+<div class="modal-header">
+    <h4 class="modal-title">{{titleProjectModal}}</h4>
+  </div>
+  <div class="modal-body">
+    <div class="container text-center container-modal sin-padding">
+      <h2>{{tituloProject}}</h2>
+      <br>
+      <div class="form-horizontal">
+        <br>
+        <div class="form-group">
+          <div class="col-md-12 sin-padding">
+            <div class="table-responsive">
+              <table class="table table-striped table-bordered" style="table-layout: fixed;">
+                <thead>
+                  <tr>
+                    <th scope="col" style="text-align: center">Código</th>              
+                    <th scope="col" style="text-align: center">Nombre del control</th>  
+                    <th scope="col" style="text-align: center">F. Registro</th>
+                  </tr>
+                </thead>
+                
+                <tbody>
+                    <tr  *ngFor="let item of cdcArray; let i = index" >
+                      
+                      <td style="text-align: center">{{item.scodproject}}</td>
+                      <td style="text-align: center">{{item.snameproject}}</td>
+                      <td style="text-align: center">{{item.dregister| date: "dd/MM/yyyy"}}</td>
+                    </tr>
+                  </tbody>
+                  <br>
+              </table>
+            </div>
+          </div>
+          
+        </div>
+  
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <div class="container">
+      <div class="row mt-2 text-center">
+        <div class="col-md-4 col-sm-4"></div>
+        <div class="col-md-4 col-sm-4">
+          <button (click)="closeModal()" class="btn btn-outline-info btn-active">
+            <i class="la la-close"></i>&nbsp;Cerrar
+          </button>
+        </div>
+        <div class="col-md-4 col-sm-4"></div>
+      </div>
+    </div>
+  </div>

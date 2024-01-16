@@ -1,0 +1,758 @@
+<!-- INICIO Modal Editar y nuevo-->
+  <form
+    class="form-horizontal"
+    #f="ngForm"
+    (ngSubmit)="save(f)"
+    novalidate
+    autocomplete="false"
+  >
+  
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">{{ titleModal }}</h4>
+      <!-- <button type="button" class="close" aria-label="Close" (click)="close()">
+        <span aria-hidden="true">&times;</span>
+      </button> -->
+    </div>
+    <!--Formulario-->
+    <div class="modal-body">
+      <div class="form-body">
+        <div class="row" *ngIf="flagEditar">
+          <div class="col-md-6">
+            <div class="form-group">
+              <label for="Clinica">Código Colaborador</label>
+              <input type="text" id="code" name="code" class="form-control" readonly [(ngModel)]="PersonManagement.scodperson"/>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+            <div class="form-group">
+              <label for="Clinica">Primer Nombre</label
+              ><span class="required"> (*)</span>
+              <input
+                type="text"
+                id="firstNombre"
+                name="firstNombre"
+                placeholder="Primer Nombre"
+                required
+                #FirstNombre="ngModel"
+                class="form-control"
+                [(ngModel)]="PersonManagement.sfirstname"
+                (keypress)="this.utilityService.keyPressOnlyAlfhabets($event)"
+                (blur)="blurGetUser()"
+              />
+              <div
+                *ngIf="!FirstNombre.valid && FirstNombre.touched"
+                class="mensaje-error-control mensaje-error-span"
+              >
+                Primer Nombre es obligatorio
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group">
+              <label for="Clinica">Segundo Nombre</label>
+              <!-- <span class="required"> (*)</span> -->
+              <input
+                type="text"
+                id="ssecondname"
+                name="ssecondname"
+                placeholder="Segundo Nombre"
+               
+                #Ssecondname="ngModel"
+                class="form-control"
+                [(ngModel)]="PersonManagement.ssecondname"
+                (keypress)="this.utilityService.keyPressOnlyAlfhabets($event)"
+              />
+              <!-- <div
+                *ngIf="!Ssecondname.valid && Ssecondname.touched"
+                class="mensaje-error-control mensaje-error-span"
+              >
+              
+              Segundo Nombre es obligatorio 
+              </div>-->
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+            <div class="form-group">
+              <label for="Clinica">Apellido Paterno</label
+              ><span class="required"> (*)</span>
+              <input
+                type="text"
+                id="slastname"
+                name="slastname"
+                placeholder="Apellido Paterno"
+                required
+                #Slastname="ngModel"
+                class="form-control"
+                [(ngModel)]="PersonManagement.slastname"
+                (keypress)="this.utilityService.keyPressOnlyAlfhabets($event)"
+                (blur)="blurGetUser()"
+              />
+              <div
+                *ngIf="!Slastname.valid && Slastname.touched"
+                class="mensaje-error-control mensaje-error-span"
+              >
+                Apellido Paterno es obligatorio
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group">
+              <label for="Clinica">Apellido Materno </label
+              ><span class="required"> (*)</span>
+              <input
+                type="text"
+                id="smotherlastname"
+                name="smotherlastname"
+                placeholder="Apellido Materno"
+                required
+                #Smotherlastname="ngModel"
+                class="form-control"
+                [(ngModel)]="PersonManagement.smotherlastname"
+                (keypress)="this.utilityService.keyPressOnlyAlfhabets($event)"
+              />
+              <div
+                *ngIf="!Smotherlastname.valid && Smotherlastname.touched"
+                class="mensaje-error-control mensaje-error-span"
+              >
+                Apellido Materno es obligatorio
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+            <div class="form-group">
+              <label for="Estado">Tipo de Documento</label>
+              <span class="required"> (*)</span>
+              <select
+                class="select2 form-control block"
+                #nid_typeDocument="ngModel"
+                id="nid_typeDocument"
+                required
+                name="nid_typeDocument"
+                [(ngModel)]="PersonManagement.nid_typeDocument"
+                (change)="numTypeDocu(PersonManagement.nid_typeDocument)"
+              >
+              <option value="0">-- Seleccione --</option>
+                <option
+                  *ngFor="let item of DocumentType"
+                  [value]="item.nid_mastertable_type"
+                >
+                  {{ item.sshort_value }}
+                </option>
+              </select>
+              <div
+                *ngIf="(!nid_typeDocument.valid && nid_typeDocument.touched) || (nid_typeDocument.touched && PersonManagement.nid_typeDocument == 0)"
+                class="mensaje-error-control mensaje-error-span"
+              >
+                Tipo de Documento es obligatorio
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <div class="form-group">
+              <label for="Clinica">Número de Documento </label
+              ><span class="required"> (*)</span>
+              <input
+                type="text"
+                id="sdocumentNumber"
+                name="sdocumentNumber"
+                placeholder="Numero de Documento"
+                required
+                #sdocumentNumber="ngModel"
+                class="form-control"
+                [(ngModel)]="PersonManagement.sdocumentNumber"
+                (blur)="validateDoc()"
+                (keypress)="this.utilityService.keyPressNumber($event)"
+                [maxLength]="maxLength"
+              />
+              <div
+                *ngIf="!sdocumentNumber.valid && sdocumentNumber.touched"
+                class="mensaje-error-control mensaje-error-span"
+              >
+                Número de Documento es obligatorio
+              </div>
+              <div
+            *ngIf="docRepetido && PersonManagement.sdocumentNumber != '' && !flagEditar"
+            class="mensaje-error-control mensaje-error-span"
+          >
+            N° Documento repetido
+          </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <div class="form-group">
+              <label for="Clinica">Correo Empresarial</label
+              ><span class="required"> (*)</span>
+              <input
+                type="email"
+                id="semail"
+                name="semail"
+                required
+                placeholder="Correo Empresarial"
+                #semail="ngModel"
+                class="form-control"
+                [(ngModel)]="PersonManagement.semail"
+              />
+              <div
+                *ngIf="!semail.valid && semail.touched"
+                class="mensaje-error-control mensaje-error-span"
+              >
+                Correo Empresarial es obligatorio
+              </div>
+              <div
+                *ngIf="!isValidEmail"
+                class="mensaje-error-control mensaje-error-span"
+              >
+                Correo Inválido
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-12">
+          <div class="form-group">
+            <label for="Clinica">Correo Personal </label>
+            <!-- <span class="required"> (*)</span> -->
+            <input
+              type="text"
+              id="semail2"
+              name="semail2"
+              placeholder="Correo Personal"
+              #semail2="ngModel"
+              class="form-control"
+              [(ngModel)]="PersonManagement.semail2"
+            />
+            <div
+                *ngIf="!isValidEmail2"
+                class="mensaje-error-control mensaje-error-span"
+              >
+                Correo Inválido
+            </div>
+            <!-- <div
+              *ngIf="!semail2.valid && semail2.touched"
+              class="mensaje-error-control mensaje-error-span"
+            >
+              Correo Personal es obligatorio
+            </div> -->
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form-group">
+            <label for="Clinica">Teléfono Fijo </label>
+            <!-- <span class="required"> (*)</span> -->
+            <input
+              type="text"
+              id="sphone"
+              name="sphone"
+              
+              placeholder="Telefono Fijo"
+              #sphone="ngModel"
+              class="form-control"
+              [(ngModel)]="PersonManagement.sphone"
+              (keypress)="this.utilityService.keyPressNumber($event)"
+              maxlength="7"
+            />
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <div class="form-group">
+            <label for="Clinica">Teléfono Celular </label
+            ><span class="required"> (*)</span>
+            <input
+              type="text"
+              id="sphone2"
+              name="sphone2"
+              required
+              placeholder="Telefono Celular"
+              #sphone2="ngModel"
+              class="form-control"
+              [(ngModel)]="PersonManagement.sphone2"
+              (keypress)="this.utilityService.keyPressNumber($event)"
+              maxlength="9"
+            />
+            <div
+              *ngIf="!sphone2.valid && sphone2.touched"
+              class="mensaje-error-control mensaje-error-span"
+            >
+              Teléfono Celular es obligatorio
+            </div>
+          </div>
+        </div>
+      </div>
+<!-- INICIO -->
+<div *ngIf="isAdminOrRrhh">
+      <div class="row">
+        <div [ngClass] = "{'col-md-5': flagEsCesado, 'col-md-6': !flagEsCesado}">
+          <div class="form-group">
+            <label for="fecha_desde">Fecha de Inicio</label>
+            <span class="required"> (*)</span>
+            <div class="date input-group">
+              <div class="datepicker date input-group">
+                <input [(ngModel)]="PersonManagement.ddateofadmission" name="ddateofadmission" #ddateofadmission="ngModel" required type="text"
+                  class="form-control fecha" placeholder="Fecha de inicio" [bsConfig]="bsConfig"
+                  #dp1="bsDatepicker" bsDatepicker placement="bottom"
+                  value="{{ PersonManagement.ddateofadmission | date:'dd/MM/yyyy' }}">
+
+                <div class="input-group-append">
+                  <span class="input-group-text px-2" (click)="dp1.toggle()"><i class="fa fa-calendar"
+                      style="line-height: 1px;"></i></span>
+                </div> 
+              </div>
+              <div
+                *ngIf="!ddateofadmission.valid && ddateofadmission.touched"
+                class="mensaje-error-control mensaje-error-span"
+              >
+                Fecha de Inicio es obligatorio
+              </div>
+            </div>
+          </div>
+        </div>
+        <div [ngClass] = "{'col-md-5': flagEsCesado, 'col-md-6': !flagEsCesado}">
+          <div class="form-group">
+            <label for="fecha_desde">Fecha de Cese</label>
+            <div class="date input-group">
+              <div class="datepicker date input-group">
+                <input [(ngModel)]="PersonManagement.dterminationdate" name="dterminationdate" #dterminationdate="ngModel" required type="text"
+                  class="form-control fecha" placeholder="Fecha de Cese" [bsConfig]="bsConfig"
+                  #dp2="bsDatepicker" bsDatepicker placement="bottom"
+                  value="{{ PersonManagement.dterminationdate | date:'dd/MM/yyyy' }}">
+
+                <div class="input-group-append">
+                  <span class="input-group-text px-2" (click)="dp2.toggle()"><i class="fa fa-calendar"
+                      style="line-height: 1px;"></i></span>
+                </div> 
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-2" *ngIf="flagEsCesado">
+          <div class="form-group">
+            <label for="agregar_cese">&nbsp;</label>
+            <div class="input-group-append" style="height: 36px;" title="Agregar nueva Fecha" (click) = "addNewInitialDate()">
+              <span class="input-group-text px-2"><i class="fa fa-plus" ></i></span>
+            </div> 
+          </div>
+        </div>
+      </div>
+    
+      <!-- Logica para agregar nuevas fechas de ingreso -->
+      <div class="row" *ngFor="let item of listaCese; index as indexCese">
+        <div class="col-md-6">
+          <div class="form-group">
+            <label for="fecha_desde">Nueva Fecha de Inicio</label>
+            <div class="date input-group">
+              <div class="datepicker date input-group">
+                <input [(ngModel)]="item.ddateofadmission" [name]="indexCese.toString() + '_' + 'ddateofadmission'" required type="text"
+                  class="form-control fecha" placeholder="Fecha de inicio" [bsConfig]="bsConfig"
+                  #dp="bsDatepicker" bsDatepicker placement="bottom"
+                  value="{{ item.ddateofadmission | date:'dd/MM/yyyy' }}">
+
+                <div class="input-group-append">
+                  <span class="input-group-text px-2" (click)="dp.toggle()"><i class="fa fa-calendar"
+                      style="line-height: 1px;"></i></span>
+                </div> 
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group">
+            <label for="fecha_desde">Nueva Fecha de Cese</label>
+            <div class="date input-group">
+              <div class="datepicker date input-group">
+                <input [(ngModel)]="item.dterminationdate" [name]="indexCese.toString() + '_' + 'dterminationdate'" required type="text"
+                  class="form-control fecha" placeholder="Fecha de Cese" [bsConfig]="bsConfig"
+                  #dp="bsDatepicker" bsDatepicker placement="bottom"
+                  value="{{ item.dterminationdate | date:'dd/MM/yyyy' }}">
+                <div class="input-group-append">
+                  <span class="input-group-text px-2" (click)="dp.toggle()"><i class="fa fa-calendar"
+                      style="line-height: 1px;"></i></span>
+                </div> 
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Fin Logica para agregar nuevas fechas de ingreso -->
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form-group">
+            <label for="nid_state">Estado</label
+            ><span class="required"> (*)</span>
+            <select
+              class="select2 form-control block"
+              #nid_state="ngModel"
+              required
+              id="nid_state"
+              name="nid_state"
+              [(ngModel)]="PersonManagement.nid_state"
+              value="{{ PersonManagement.nid_state }}"
+            >
+              <option value="0">-- Seleccione --</option>
+              <option
+                *ngFor="let item of ListState"
+                [value]="item.nid_mastertable"
+                [selected]="item.nid_mastertable==3"
+              >
+                {{ item.sshort_value }}
+              </option>
+            </select>
+            <div
+              *ngIf="(!nid_state.valid && nid_state.touched) || (nid_state.touched && PersonManagement.nid_state == 0)"
+              class="mensaje-error-control mensaje-error-span"
+            >
+              Estado es obligatorio
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group">
+            <label for="Estado">Perfil del colaborador</label
+            ><span class="required"> (*)</span>
+            <select
+              class="select2 form-control block"
+              #nid_position="ngModel"
+              required
+              id="nid_position"
+              name="nid_position"
+              [(ngModel)]="PersonManagement.nid_position"
+              value="{{ PersonManagement.nid_position }}"
+            >
+              <option value="0">-- Seleccione --</option>
+              <option *ngFor="let item of profile" [value]="item.nid_mastertable_type">
+                {{ item.sshort_value }}
+              </option>
+            </select>
+            <div
+              *ngIf="(!nid_position.valid && nid_position.touched) || (nid_position.touched && PersonManagement.nid_position == 0)"
+              class="mensaje-error-control mensaje-error-span"
+            >
+              Perfil es obligatorio
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form-group">
+            <label for="Estado">Categoría del colaborador</label
+            ><span class="required"> (*)</span>
+            <select
+              class="select2 form-control block"
+              #nid_category="ngModel"
+              required
+              id="nid_category"
+              name="nid_category"
+              [(ngModel)]="PersonManagement.nid_category"
+              value="{{ PersonManagement.nid_category }}"
+              (change)="getJob(PersonManagement.nid_category)"
+            >
+              <option value="0">-- Seleccione --</option>
+              <option *ngFor="let item of listCategory" [value]="item.nid_mastertable_type" >
+                {{item.sshort_value}}
+              </option>
+            </select>
+            <div
+              *ngIf="(!nid_category.valid && nid_category.touched) || (nid_category.touched && PersonManagement.nid_category == 0)"
+              class="mensaje-error-control mensaje-error-span"
+            >
+            Categoría es obligatorio
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group">
+            <label for="Estado">Puesto del colaborador</label
+            ><span class="required"> (*)</span>
+            <select
+              class="select2 form-control block"
+              #nid_job="ngModel"
+              required
+              id="nid_job"
+              name="nid_job"
+              [(ngModel)]="PersonManagement.nid_job"
+              value="{{PersonManagement.nid_job}}"
+            >
+              <option value="0">-- Seleccione --</option>
+              <option *ngFor="let item of listJob" [value]="item.nid_mastertable" >
+                {{item.sshort_value}}
+              </option>
+            </select>
+            <div
+              *ngIf="(!nid_job.valid && nid_job.touched) || (nid_job.touched && PersonManagement.nid_job == 0)"
+              class="mensaje-error-control mensaje-error-span"
+            >
+            Puesto es obligatorio
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row" style="margin-bottom: 10px;">
+        <div class="col-md-6">
+          <label for="costoEmpresa">Costo</label>
+          <input disabled type="number" id="ncosto" name="ncosto" placeholder="Costo" #ncosto="ngModel" class="form-control" [(ngModel)]="PersonManagement.costHist.ncost" />
+        </div>
+        <div class="col-md-3">
+          <br><br>
+          <a id="editarCosto" title="Editar Costo" (click)="EditCost()">
+            <i class="la la-edit"></i> 
+          </a>
+        </div>
+        <div class="col-md-3">
+          <br><br>
+          <a  id="verHistorial" title="Ver Historial de Costo" (click)="ViewHistCost(PersonManagement.nid_person)">
+              <i class="la la-list-ul"></i>
+          </a>
+        </div>
+      </div>
+      <div *ngIf="PersonManagement.saveCost" class="row">
+        <div class="col-md-6">
+          <div class="form-group">
+            <label for="Clinica">Costo </label >
+              <!-- <span class="required"> (*)</span> -->
+            <input type="number" id="ncosto2" name="ncosto2"  placeholder="Costo" #ncosto="ngModel" class="form-control" [(ngModel)]="PersonManagement.costHist.ncost" />
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group">
+            <label for="dcostdate">Fecha Inicio Costo</label>
+            <div class="date input-group">
+              <div class="datepicker date input-group">
+                <input [(ngModel)]="PersonManagement.costHist.dcost_date" id="dcostdate" name="dcostdate" #dcostdate="ngModel"  type="text"
+                  class="form-control fecha" placeholder="Fecha de costo" [bsConfig]="bsConfig"
+                  #dp="bsDatepicker" bsDatepicker placement="top"
+                  value="{{ PersonManagement.ddateofadmission | date:'dd/MM/yyyy' }}">
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div *ngIf="viewHistCost" class="row">
+        <div class="form-group">
+          <div class="col-md-12">
+            <div class="table-responsive">
+              <table
+                class="table table-striped table-bordered"
+                style="table-layout: fixed"
+              >
+                <div style="overflow-x: auto; width: 100%">
+                  <thead>
+                    <tr>
+                      <th scope="col" style="width: 80px">Item</th>
+                      <th class="th-lg" scope="col">
+                        Costo
+                      </th>
+                      <th class="th-lg" scope="col">
+                        Fecha
+                      </th>
+                      
+                    </tr>
+                  </thead>
+                  <div
+                    *ngIf="
+                    listHistCost === null;
+                      then NoexistenRegistroCost;
+                      else MostrarRegistroCost
+                    "
+                  ></div>
+                  <ng-template #NoexistenRegistroCost>
+                    <tbody>
+                      <tr>
+                        <td
+                          colspan="7"
+                          style="text-align: center"
+                        >
+                          No se encontraron resultados
+                        </td>
+                      </tr>
+                    </tbody>
+                  </ng-template>
+                  <ng-template #MostrarRegistroCost>
+                    <tbody>
+                      <tr
+                        *ngFor="let item of listHistCost; let i = index"
+                      >
+                        
+                        <td scope="row" class="font-weight-bold">{{ i+1 }}</td>
+                        <td>
+                          {{ item.ncost }}
+                        </td>
+                        <td>{{ item.dcost_date.getDate() }}-
+                          {{ item.dcost_date.getMonth()  +1}}-
+                          {{ item.dcost_date.getFullYear() }}
+                        </td>
+                      </tr>
+                    </tbody>
+                  </ng-template>
+                </div>
+              </table>
+            </div>
+          </div>
+          
+        </div>
+      </div>
+</div>
+    <!-- FIN -->
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form-group">
+            <label for="suser">Usuario </label
+            ><span class="required"> (*)</span>
+            <input 
+              autocomplete="off"
+              type="text" 
+              id="suser"
+              name="suser"
+              required
+              #suser="ngModel"
+              class="form-control"
+              [(ngModel)]="PersonManagement.suser"
+              (blur)="validateUser()"
+              [disabled]="isNewUser"
+            />
+            <div
+              *ngIf="!suser.valid && suser.touched && !flagEditar"
+              class="mensaje-error-control mensaje-error-span"
+            >
+              El usuario es obligatorio
+            </div>
+            <div
+             *ngIf="usuarioRepetido && PersonManagement.suser != '' && flagEditar"
+             class= 'ng disabled ="suser"'
+            >
+            </div>
+            
+            <div
+            *ngIf="usuarioRepetido && PersonManagement.suser != '' && !flagEditar"
+            class="mensaje-error-control mensaje-error-span"
+          >
+            Usuario repetido
+          </div>
+          <!-- <button 
+          (click)="cambiarUsu()">
+          <i class="fad fa-arrow-alt-square-left"></i>
+          </button> -->
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group">
+            <label  for="spassword">Contraseña </label
+            >
+            <!--[disabled]="isAdminOrRrhh"  -->
+              <input 
+              autocomplete="off"
+              [type]="fieldTextType? 'text': 'password'"
+              id="spassword"
+              name="spassword"
+              required
+              #spassword="ngModel"
+              class="form-control"
+              [(ngModel)]="PersonManagement.spassword" 
+            />
+            <div style="margin-top: -25px; padding-right: 20px; float: right;">
+              <span>
+                <i class="fa fa-eye"
+                    *ngIf="fieldTextType" (click)="toggleFieldTextType()"></i>
+                <!-- <i class="fa fa-eye-slash"
+                    *ngIf="!fieldTextType" (click)="toggleFieldTextType()"></i> -->
+              </span>
+            </div>
+            <div
+              *ngIf="!spassword.valid && spassword.touched && !flagEditar"
+              class="mensaje-error-control mensaje-error-span"
+            >
+              La contraseña es obligatoria
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6"></div>
+        <div *ngIf="isConfPass" class="col-md-6">
+          <div class="form-group">
+            <label for="suserconf">Confirmar contraseña </label>
+            <!-- <span class="required"> (*)</span> -->
+            <input 
+              autocomplete="off"
+              type="password"
+              id="suserconf"
+              name="suserconf"
+              required
+              class="form-control"
+              [(ngModel)]="confPass"
+              (blur)="blurPass()"
+             />
+             
+            <div
+              *ngIf="!verifiquePass && PersonManagement.nid_person == 0"
+              class="mensaje-error-control mensaje-error-span"
+            >
+              Las contraseñas no coinciden
+            </div>
+
+          </div>
+          
+         
+          
+          
+        </div> 
+        
+      </div>
+      
+    <!-- </form> -->
+    </div>
+    <div class="modal-footer">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-sm-6">
+            <button
+              type="button"
+              class="btn btn-outline-info btn-block margin-button"
+              data-dismiss="modal"
+              (click)="close()"
+            >
+              Cancelar
+            </button>
+          </div>
+          <div class="col-sm-6">
+            <button
+              type="submit"
+              class="btn btn-outline-info btn-block btn-active margin-button"
+              data-dismiss="modal"
+              >
+              Guardar
+            </button>
+            <!-- <button
+              type="submit"
+              class="btn btn-outline-info btn-block btn-active margin-button"
+              data-dismiss="modal"
+              
+                [disabled] = "verifiquePass==true || !nid_state.valid || PersonManagement.nid_state == 0 || PersonManagement.nid_position == 0 || !suser.valid || !spassword.valid || !FirstNombre.valid || !Ssecondname.valid || !Slastname.valid || !Smotherlastname.valid || !sdocumentNumber.valid  || !semail.valid || !semail2.valid || !sphone.valid || !sphone2.valid || !ddateofadmission.valid || !nid_position.valid || !nsalary.valid || !nid_typeDocument.valid || PersonManagement.nid_typeDocument == 0"
+              
+              
+            >
+              Guardar
+            </button>-->
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+
+    
+  <ngx-spinner name="SpinnerProject" bdColor="rgba(51,51,51,0.8)" size="large" color="#fff" type="ball-spin-clockwise" [fullScreen] = "true">
+    <p style="color: white">Please Wait. </p>  
+ </ngx-spinner>

@@ -1,0 +1,149 @@
+<div class="modal-body">
+  <div class="container text-center">
+    <div class="form-horizontal">
+      <br>
+      <div class="form-group">
+        <div class="row">
+          <div class="form-group text-left col-md-6 col-sm-12" style="display: none;">
+            <label >Nuevo Hito</label>
+            <input type="text" name="" id="" class="form-control" disabled [(ngModel)]="projectStep2Detail.nmilestone"
+              maxlength="10">
+          </div>
+          <div class="form-group text-left col-md-6 col-sm-12">
+            <label >Descripción (*)</label>
+            <input type="text" name="" id="" class="form-control"  
+              required
+              #sdescription = "ngModel"
+              [(ngModel)]="projectStep2Detail.sdescription"
+              oninput="this.value = this.value.toUpperCase()"
+              maxlength="200"
+              >
+              <div 
+                *ngIf="!sdescription.valid && sdescription.touched"
+                class="mensaje-error-control mensaje-error-span"
+                style="margin-top: 10px;"
+              >
+                Descripción obligatoria
+              </div>
+          </div>
+          <div class="form-group text-left col-md-6 col-sm-12">
+            <label >Fecha planificada (*)</label>
+            <input type="date" name="" id="" class="form-control"
+              required
+              #dplanned_date = "ngModel"
+              [(ngModel)]="projectStep2Detail.dplanned_date">
+            <div 
+              *ngIf="!dplanned_date.valid && dplanned_date.touched"
+              class="mensaje-error-control mensaje-error-span"
+              style="margin-top: 10px;"
+            >
+              Fecha Obligatoria
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="form-group text-left col-md-6 col-sm-12">
+            <label >% a facturar (*)</label>
+            <input type="number" name="" id="" (change)="calcularMonto()" class="form-control" 
+            (keypress)="currencyCheck($event, projectStep2Detail.npercentage_invoice)"
+            (change)="projectStep2Detail.npercentage_invoice < 0 ? projectStep2Detail.npercentage_invoice = 0 : projectStep2Detail.npercentage_invoice; projectStep2Detail.npercentage_invoice > 100 ? projectStep2Detail.npercentage_invoice = 100 : projectStep2Detail.npercentage_invoice;"
+            required
+            #npercentage_invoice = "ngModel"
+            [(ngModel)]="projectStep2Detail.npercentage_invoice" 
+            onkeydown="return event.key !== 'e'&& event.key !== 'E' && event.key !== '+' && event.key !== '-'">
+            <div
+              *ngIf="(!npercentage_invoice.valid && npercentage_invoice.touched) || (npercentage_invoice.touched && projectStep2Detail.npercentage_invoice == 0)"
+              class="mensaje-error-control mensaje-error-span"
+              style="margin-top: 10px;"
+            >
+              Ingrese % a Facturar
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="form-group text-left col-md-6 col-sm-12">
+            <label >Monto (sin IGV) (*)</label>
+            <input type="number" disabled name="" id="" class="form-control" [(ngModel)]="projectStep2Detail.namount"
+              maxlength="10">
+          </div>
+          <div class="col-sm-3">
+            <label>&nbsp;</label>
+            <button type="button" class="btn btn-outline-info btn-active"  (click)="addHito()">
+              <i class="la la-file-o"></i>&nbsp;Guardar
+            </button>
+          </div>
+          <div *ngIf="isEditHito" class="col-sm-3">
+            <label>&nbsp;</label>
+            <button (click)="cancelEditHito()" class="btn btn-outline-info btn-active">
+              <i class="la la-close"></i>&nbsp;Cancelar
+            </button>
+          </div>
+        </div>
+        <br>
+        <div *ngIf="isEdit" class="row" >                    
+          <div class="form-group">
+            <div class="col-md-12">
+              <div class="table-responsive">
+                <table class="table table-striped table-bordered" style="table-layout: fixed;">
+                  <thead>
+                    <tr>
+                      
+                     
+                      <th scope="col" style="text-align: center">No. Hito</th>              
+                      <th scope="col" style="text-align: center">Descripción</th>
+                      <th scope="col" style="text-align: center">Fecha Planificada</th>
+                      <th scope="col" style="text-align: center">% a Facturar</th>
+                      <th scope="col" style="text-align: center">Monto(Sin IGV)</th>
+                      <th scope="col" style="text-align: center">Acciones</th>
+
+                    </tr>
+                  </thead>
+                  
+                  
+                    <tbody>
+                      <tr  *ngFor="let item of listProjectStep2; let i = index" >
+                    
+                        <td >{{item.nmilestone}}</td>
+                        <td >{{item.sdescription}}</td>
+                        <td >{{item.dplanned_date | date: "dd/MM/yyyy" }}</td>
+                        <td >{{item.npercentage_invoice}}</td>
+                        <td >{{moneySymbolS}}{{(item.npercentage_invoice*projectStep2.nexpected_income/100) | number:'1.2-2'}}</td>
+                        <td >
+                          <a title="Editar" (click)="EditHito(item)"> <i
+                            class="la la-edit"></i> </a>
+                          <a
+                            *ngIf="item.npercentage_invoice != 0 && !projectDisable"
+                            title="Eliminar"
+                            (click)="delete(item)"
+                          >
+                            <i class="fas fa-trash"></i
+                          ></a>
+                          </td> 
+                      </tr>
+                    </tbody>
+                    
+                  
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <div class="container">
+          <div class="row mt-2 text-center">
+            <div class="col-sm-4">
+                  &nbsp;
+            </div>
+            <div class="col-sm-4">
+              <button (click)="closeModal()" class="btn btn-outline-info btn-active">
+                <i class="la la-close"></i>&nbsp;Cerrar
+              </button>
+            </div>
+          </div>
+          </div>
+          </div>
+      </div>
+
+    </div>
+  </div>
+</div>

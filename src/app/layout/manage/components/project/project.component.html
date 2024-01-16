@@ -1,0 +1,786 @@
+<div class="modal-header">
+    <h4 class="modal-title">{{titleProjectModal}}</h4>
+</div>
+<div class="modal-body">
+    <div class="container text-center">
+      <div class="form-horizontal">
+        <br>
+        <div class="form-group">
+          <div class="row">
+            <div class="col-12">
+              <div class="form-body">
+                <mat-tab-group #tabset [(selectedIndex)]="selectedIndex">
+                  <mat-tab id="tab-1" label="Paso 01">
+                      <br>
+                      <div class="row">
+                        <div class="form-group text-left col-md-6 col-sm-12">
+                          <label >Tipo de Servicio(*)</label>                          
+                          <select 
+                          class="select2 form-control block" 
+                          #nid_project_type="ngModel"
+                          [(ngModel)]="project.nid_project_type"
+                          value="project.nid_project_type"
+                          (change)="changeTipoServicio()"
+                          convert-to-number
+                          >
+                            <option value="0">-- Seleccione --</option>
+                            <option *ngFor="let item of ProjectTypeDropDownList" [value]="item.nid_mastertable_type">
+                              {{item.sshort_value}}</option>
+                          </select>
+                          <div
+                          *ngIf="(!nid_project_type.valid && nid_project_type.touched) || (nid_project_type.touched && project.nid_project_type == 0)"
+                          class="mensaje-error-control mensaje-error-span"
+                          style="margin-top: 10px;"
+                          >
+                            Tipo de Proyecto obligatorio
+                          </div>
+                        </div>
+                        
+                        <div class="form-group text-left col-md-6 col-sm-12">
+                          <label >Cod. Servicio(*)</label>
+                          <input type="text" name="" id="" 
+                          [(ngModel)]="project.scodproject" class="form-control"
+                             [disabled]="this.disableEditarStep1" maxlength="8"
+                             
+                            value="project.scodproject">
+                        </div>
+                      </div>
+
+                      <div class="row">
+                        <div class="form-group text-left col-md-6 col-sm-12">
+                          <label >Nombre del Servicio</label>
+                          <span class="required"> (*)</span>
+                          <input type="text" name="projectname" id="projectname"
+                          required
+                          #projectname="ngModel"
+                           [(ngModel)]="project.snameproject" class="form-control"
+                           oninput="this.value = this.value.toUpperCase()">
+                          <div
+                          *ngIf="!projectname.valid && projectname.touched"
+                          class="mensaje-error-control mensaje-error-span"
+                          style="margin-top: 10px;"
+                          >
+                            Nombre de Proyecto obligatorio
+                          </div> 
+                        </div>
+                        <div class="text-left col-md-6 col-sm-12" *ngIf="!(project.nid_project_type==3 || project.nid_project_type==4)">
+                          <label for="sdocumentnumber">Metodología(*)</label><br>
+                          <div class="form-check form-check-inline">
+                          
+                            <!--<input type="text" name="" id="" class="form-control" [(ngModel)]="project.smethodology">-->
+                            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="radioMethodology1" value="1" [(ngModel)]="project.nid_projectmethodology">
+                            <label class="form-check-label" for="radioMethodology1" style="padding-right: 20px;">PMI</label>
+                            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="radioMethodology2" value="2" [(ngModel)]="project.nid_projectmethodology">
+                            <label class="form-check-label" for="radioMethodology2">SCRUM</label>
+                          </div>
+                          <!--<input type="radio" value="1" name="methodology" [(ngModel)]="project.smethodology" > PMI
+                          <input type="radio" value="2" name="methodology" [(ngModel)]="project.smethodology" > SCRUM-->
+                        </div>
+                      </div>
+
+                      <div class="row">
+                        <div class="form-group text-left col-md-6 col-sm-12">
+                          <label >Responsable(*)</label>
+                          <select class="select2 form-control block" [(ngModel)]="project.nid_manager" 
+                                  [disabled]="ManagerDisabled">
+                            <option [value]="user.nid_person" selected>{{user.sfullname}}</option>
+                            
+                            <option *ngFor="let item of PersonDropDownList" [value]="item.code">
+                              {{item.description}}</option>
+                            <!-- <span class="mensaje-error-control">El campo Cliente es obligatorio</span> -->
+                          </select>
+                        </div>
+                        <div class="form-group text-left col-md-4 col-sm-12" style="padding-right: 0px;">
+                          <label for="documenttype">Cliente(*)</label>
+                          <select class="select2 form-control block" 
+                            #nid_client = "ngModel"
+                            [(ngModel)]="project.nid_client">
+                            <option value="0">-- Seleccione --</option>
+                            <option *ngFor="let item of ClientDropDownList" [value]="item.nid_client">
+                              {{item.sname}} - {{item.sbusinessname}}</option>
+                          </select>
+                          <div
+                          *ngIf="(!nid_client.valid && nid_client.touched) || (nid_client.touched && project.nid_client == 0)"
+                          class="mensaje-error-control mensaje-error-span"
+                          style="margin-top: 10px;"
+                          >
+                            Seleccionar Cliente
+                          </div>
+                        </div>
+                        <div class="form-group col-md-2 col-sm-12" style="padding-left: 0px;padding-right: 0px;">
+                          <div style="padding-top: 22px;">
+                            <button *ngIf="!projectDisable" type="button" class="btn btn-outline"  (click)="AddClient()">
+                              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus" viewBox="0 0 16 16">
+                                <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
+                              </svg>&nbsp;Añadir
+                            </button>
+                          </div>
+                        </div>
+
+                      </div>
+                      <div class="row" *ngIf="project.nid_project_type==5">
+                        <div class="form-group text-left col-md-6 col-sm-12">
+                          <label >Proyecto asociado(*)</label>
+                          <select 
+                          class="select2 form-control block"
+                          [(ngModel)]="project.nid_projectFather"
+                          value="project.nid_projectFather"                        
+                          convert-to-number
+                          >
+                            <option value="0" [disabled]="true">-- Seleccione --</option>
+                            <option *ngFor="let item of projectList" [value]="item.nid_project">
+                              {{item.scodproject}} - {{item.snameproject}}</option>
+                          </select>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="form-group text-left col-md-12 col-sm-12">
+                          <label for="documenttype">Descripción</label>
+                          <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" [(ngModel)]="project.sdescription"
+                          oninput="this.value = this.value.toUpperCase()"
+                          ></textarea>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-sm-3">
+                          <button  *ngIf="!projectDisable" type="button" class="btn btn-outline-info btn-active"  (click)="submit()">
+                            <i class="la la-file-o"></i>&nbsp;Guardar y Seguir
+                          </button>
+                        </div>
+                      </div>
+
+                  </mat-tab>
+                  <mat-tab id="tab-2"[disabled]="step02Disabled" label="Paso02">
+                      <br>
+                      <!--Fecha de inicio-->
+                      <div class="row">
+                        <div class="form-group text-left col-md-6 col-sm-12">
+                          <label >F. Inicio Planificada(*)</label>
+                          <input type="date" name="" id="" class="form-control" 
+                          required
+                          #dbegin_date = "ngModel"
+                           [(ngModel)]="projectStep2.dbegin_date" >
+                          <div
+                            *ngIf="!dbegin_date.valid && dbegin_date.touched"
+                            class="mensaje-error-control mensaje-error-span"
+                            style="margin-top: 10px;"
+                          >
+                            Seleccionar Fecha Inicio
+                          </div>
+                        </div>
+                        <!--Fecha de fin-->                        
+                          <div class="form-group text-left col-md-6 col-sm-12">
+                            <label >F. Fin Planificada(*)</label>
+                            <input type="date" name="" id="" class="form-control" 
+                            required
+                            #dfinish_date = "ngModel"
+                            [(ngModel)]="projectStep2.dfinish_date">
+                              <div
+                              *ngIf="!dfinish_date.valid && dfinish_date.touched"
+                              class="mensaje-error-control mensaje-error-span"
+                              style="margin-top: 10px;"
+                              >
+                                Seleccionar Fecha Fin
+                              </div>
+                          </div>
+                      </div>
+
+                      <div class="row d-flex justify-content-start" style="padding: 15px;">
+                        <div class="btn-group">
+                          <button type="button" class="btn btn-outline dropdown-toggle" data-bs-toggle="dropdown" data-bs-display="static" aria-expanded="false" data-bs-auto-close="outside">
+                            Ver Registros de Cambio de Fecha
+                          </button>
+                          <ul class="dropdown-menu dropdown-menu-end">
+                            <li class="dropdown-item"><b>Fec. de Cambio : Fec. Inicio - Fec. Fin</b></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li class="dropdown-item" *ngFor="let item of listprojectStep2History; let i = index">
+                              <b>{{item.dregister | date: "dd/MM/yyyy"}}</b> : 
+                              {{item.dbegin_date | date: "dd/MM/yyyy"}} - 
+                              {{item.dfinish_date | date: "dd/MM/yyyy"}}
+                            </li>
+                          </ul>
+                        </div>
+                      </div>
+
+                      <div class="row">
+                        <div class="form-group text-left col-md-6 col-sm-12">
+                          <label >F. Inicio Real</label>
+                          <input type="date" name="" id="" class="form-control" 
+                          required
+                          #dbegin_date = "ngModel"
+                           [(ngModel)]="projectStep2.drealbegin_date" >
+                          <div
+                            *ngIf="!dbegin_date.valid && dbegin_date.touched"
+                            class="mensaje-error-control mensaje-error-span"
+                            style="margin-top: 10px;"
+                          >
+                            Seleccionar Fecha Inicio
+                          </div>
+                        </div>
+                        <!--Fecha de fin-->                        
+                          <div class="form-group text-left col-md-6 col-sm-12">
+                            <label >F. Fin Real</label>
+                            <input type="date" name="" id="" class="form-control" 
+                            required
+                            #dfinish_date = "ngModel"
+                            [(ngModel)]="projectStep2.drealfinish_date">
+                              <div
+                              *ngIf="!dfinish_date.valid && dfinish_date.touched"
+                              class="mensaje-error-control mensaje-error-span"
+                              style="margin-top: 10px;"
+                              >
+                                Seleccionar Fecha Fin
+                              </div>
+                          </div>
+                      </div>
+
+                      <div class="row">                        
+                        <div class="form-group text-left col-md-6 col-sm-12">
+                          <label for="sdocumentnumber">Ingresos Esperados(*)</label>
+                          <input type="number" name="" id="" class="form-control"
+                           [(ngModel)]="projectStep2.nexpected_income" 
+                           (keypress)="currencyCheck($event, projectStep2.nexpected_income)"
+                          required
+                          #nexpected_income = "ngModel"
+                          onkeydown="return event.key !== 'e'&& event.key !== 'E' && event.key !== '+' && event.key !== '-'">
+                            <div
+                            *ngIf="(!nexpected_income.valid && nexpected_income.touched) || (nexpected_income.touched && (projectStep2.nexpected_income == 0 && this.project.nid_project_type != 8))"
+                            class="mensaje-error-control mensaje-error-span"
+                            style="margin-top: 10px;"
+                            >
+                              Ingresos Esperados Obligatorio
+                            </div>
+                        </div>
+                        <div class="form-group text-left col-md-6 col-sm-12">
+                          <label >Tipo de Moneda(*)</label>                          
+                          <select class="select2 form-control block" 
+                            #ncurrency = "ngModel"
+                            [(ngModel)]="projectStep2.ncurrency"
+                            (change) = "cambioMoneda()"
+                            >
+                            <option value="0">-- Seleccione --</option>
+                             <option *ngFor="let item of listCurrency" [value]="item.nid_mastertable_type">
+                              {{item.sshort_value}}</option>
+                          </select>
+                            <div
+                            *ngIf="(!ncurrency.valid && ncurrency.touched) || (ncurrency.touched && projectStep2.ncurrency == 0)"
+                            class="mensaje-error-control mensaje-error-span"
+                            style="margin-top: 10px;"
+                            >
+                              Seleccionar Tipo de Moneda
+                            </div>
+                        </div>
+                      </div>
+
+                      <div class="row">
+                        <div class="form-group col-lg-9 col-md-6 col-sm-0">
+
+                        </div>
+                        <div class="form-group col-lg-3 col-md-6 col-sm-12">
+                          <label>&nbsp;</label>
+                          <div class="form-actions">
+                            <button *ngIf="!projectDisable" 
+                              type="button" class="btn btn-outline-info btn-active"  (click)="LoadModalHitos()">
+                              <i class="la la-file-o"></i>&nbsp;Agregar
+                            </button>
+                          </div>
+                        </div>
+                      </div>                      
+                      <div class="row" >                    
+                        <div class="form-group">
+                          <div class="col-md-12">
+                            <div class="table-responsive">
+                              <table class="table table-striped table-bordered" style="table-layout: fixed;">
+                                <thead>
+                                  <tr>
+                                    
+                                   
+                                    <th scope="col" style="text-align: center">No. Hito</th>              
+                                    <th scope="col" style="text-align: center">Descripción</th>
+                                    <th scope="col" style="text-align: center">Fecha Planificada</th>
+                                    <th scope="col" style="text-align: center">% a Facturar</th>
+                                    <th scope="col" style="text-align: center">Monto(Sin IGV)</th>
+                                    <th scope="col" style="text-align: center">Acciones</th>
+
+                                  </tr>
+                                </thead>
+                                
+                                
+                                  <tbody>
+                                    <tr  *ngFor="let item of listProjectStep2; let i = index" >
+                                  
+                                      <td >{{item.nmilestone}}</td>
+                                      <td >{{item.sdescription}}</td>
+                                      <td >{{item.dplanned_date | date: "dd/MM/yyyy" }}</td>
+                                      <td >{{item.npercentage_invoice}}</td>
+                                      <td >{{moneySymbolS}}{{(item.npercentage_invoice*projectStep2.nexpected_income/100) | number:'1.2-2'}}</td>
+                                      <td >
+                                        <a
+                                          *ngIf="item.npercentage_invoice != 0 && !projectDisable"
+                                          title="Eliminar"
+                                          (click)="delete(item)"
+                                        >
+                                          <i class="fas fa-trash"></i
+                                        ></a>
+                                        </td> 
+                                    </tr>
+                                  </tbody>
+                                  
+                                
+                              </table>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="row" *ngIf="!(project.nid_project_type==3 || project.nid_project_type==4)">
+                        <div class="col-md-4 col-sm-6"></div>
+                        <div class="col-md-4 col-sm-6"></div>
+                        <div class="form-group text-left col-md-4 col-sm-6">
+                          <label >Total</label>
+                          <input type="text" name="Total" id="" class="form-control" disabled [(ngModel)]="projectStep2.ntotal_amount">
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-sm-3">
+                          <button *ngIf="!projectDisable" type="button" class="btn btn-outline-info btn-active"  (click)="saveTab2()">
+                            <i class="la la-file-o"></i>&nbsp;Guardar y Seguir
+                          </button>
+                        </div>
+                      </div>
+                  </mat-tab>
+                  <mat-tab id="tab-3" [disabled]="step03Disabled" label="Paso03">
+                      <br>
+                      <div class="row">
+                        <div class="form-group text-left col-md-4 col-sm-12">
+                          <label >Rol Solicitado</label>
+                          <select class="select2 form-control block" (change)="ChangeCostoxHora()" 
+                            #nid_rol = "ngModel"
+                            [(ngModel)]="projectStep3Investment.nid_rol" [disabled]="isEditInvestment">
+                            <option value="0" checked>-- Seleccione --</option>
+                            <option *ngFor="let item of listRoles" [value]="item.nid_mastertable_type" >
+                              {{item.sshort_value}}</option>
+                            <!-- <span class="mensaje-error-control">El campo Cliente es obligatorio</span> -->
+                          </select>
+                            <div 
+                              *ngIf="isNidRolNull"
+                              class="mensaje-error-control mensaje-error-span"
+                              style="margin-top: 10px;"
+                            >
+                              Seleccionar Rol
+                            </div>
+                        </div>
+                        <div class="form-group text-left col-md-4 col-sm-12">
+                          <label for="sdocumentnumber">Hrs Asignación</label>
+                          <input type="number" name="" id="" class="form-control" 
+                            required
+                            #nhours_assgined = "ngModel"
+                            (keypress)="currencyCheck($event, projectStep3Investment.nhours_assgined)"
+                            [(ngModel)]="projectStep3Investment.nhours_assgined" (change)="ChangeTotalxResource()"
+                            onkeydown="return event.key !== 'e'&& event.key !== 'E' && event.key !== '+' && event.key !== '-'&& event.key !== '.'">
+                            <div 
+                              *ngIf="isNhoursAssginedNull"
+                              class="mensaje-error-control mensaje-error-span"
+                              style="margin-top: 10px;"
+                            >
+                              Asignar Horas
+                            </div>
+                        </div>
+                        <div class="form-group text-left col-md-4 col-sm-12">
+                          <label for="sdocumentnumber">Total por Recurso</label>
+                          <input type="number" name="" id="" class="form-control" [(ngModel)]="projectStep3Investment.ntotal_per_resource" disabled
+                          onkeydown="return event.key !== 'e'&& event.key !== 'E' && event.key !== '+' && event.key !== '-'">
+                        </div>
+                      </div>
+
+                      <div class="row">
+                        <div class="form-group text-left col-md-4 col-sm-12">
+                          <label for="scantidadpersonas">Cantidad Personas</label>
+                          <input type="number" name="scantidadpersonas" id="scantidadpersonas" class="form-control" 
+                            required
+                            #npeople_quantity="ngModel"
+                          (keypress)="maxLength($event, projectStep3Investment.npeople_quantity)"
+                            [(ngModel)]="projectStep3Investment.npeople_quantity" 
+                            onkeydown="return event.key !== 'e'&& event.key !== 'E' && event.key !== '+' && event.key !== '-'&& event.key !== '.'">
+                            <div 
+                              *ngIf="isNpeopleQuantityNull"
+                              class="mensaje-error-control mensaje-error-span"
+                              style="margin-top: 10px;"
+                            >
+                              Ingresar Cantidad de Personas
+                            </div>
+                        </div>
+                        <div class="form-group text-left col-md-4 col-sm-12">
+                          <label for="sdocumentnumber">Costo por Hora</label>
+                          <input type="number" name="" id="" class="form-control" [(ngModel)]="projectStep3Investment.ncost_per_hour"
+                          (change)="ChangeTotalxResource()"
+                          (keypress)="currencyCheck($event, projectStep3Investment.ncost_per_hour)"
+                          onkeydown="return event.key !== 'e'&& event.key !== 'E' && event.key !== '+' && event.key !== '-'">
+                          <div 
+                            *ngIf="isNcostPerHourNull"
+                            class="mensaje-error-control mensaje-error-span"
+                            style="margin-top: 10px;"
+                            >
+                              Ingresar Costo por Hora
+                          </div>
+                        </div>
+                        <div class="form-group col-md-4 col-sm-12">
+                          <label>&nbsp;</label>
+                          <div class="form-actions">
+                            <button *ngIf="!projectDisable" type="button" class="btn btn-outline-info btn-active" (click)="AddInvestment()">
+                              &nbsp;{{nameBtnAddInvestment}}
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="row">
+                    
+                        <div class="form-group">
+                          <div class="col-md-12">
+                            <div class="table-responsive">
+                              <table class="table table-striped table-bordered" style="table-layout: fixed;">
+                                <thead>
+                                  <tr>
+                                    
+                                   
+                                    <th scope="col" style="text-align: center">Rol Solicitado</th>              
+                                    <th scope="col" style="text-align: center">Cantidad</th>
+                                    <th scope="col" style="text-align: center">Horas Asignadas</th>
+                                    <th scope="col" style="text-align: center">Costo por Hora</th>
+                                    <th scope="col" style="text-align: center">Total por Recurso</th>
+                                    <th scope="col" style="text-align: center">Acciones</th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                    <tr  *ngFor="let item of projectStep3.listInvestment; let i = index" >
+                                      <div *ngIf="item.sactive!='D'" style="display: contents;">
+                                        <td >{{item.snamerol}}</td>
+                                        <td >{{item.npeople_quantity}}</td>
+                                        <td >{{item.nhours_assgined}}</td>
+                                        <td >{{item.ncost_per_hour}}</td>
+                                        <td >{{item.ntotal_per_resource}}</td>
+                                        <td >
+                                          <a  *ngIf="!projectDisable"  title="Editar" (click)="EditInvestment(item)"> <i
+                                            class="la la-edit"></i> </a>
+                                          <a  *ngIf="this.nameBtnAddInvestment!='Actualizar' && !projectDisable"  title="Eliminar" (click)="DelInvestment(item)"> <i
+                                            class="fas fa-trash"></i></a>
+                                        </td>
+                                    </div>
+                                    </tr>
+                                  </tbody>
+                                  
+                                
+                              </table>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-md-2 col-sm-6"></div>
+                        <div class="col-md-2 col-sm-6"></div>
+                        <div class="form-group text-left col-md-2 col-sm-6">
+                          <label >Total Horas</label>
+                          <input type="text" name="Total" id="" class="form-control" [(ngModel)]="this.projectStep3.ntotal_hours" disabled>
+                        </div>
+                        <div class="col-md-2 col-sm-6"></div>
+                        <div class="form-group text-left col-md-2 col-sm-6">
+                          <label >Total Inversión</label>
+                          <input type="text" name="Total" id="" class="form-control" [(ngModel)]="this.projectStep3.ntotal_investment" disabled>
+                        </div>
+                      </div>
+                      <div class="row">
+                        
+                      </div>
+                      <!--Asignación de áreas-->
+                      <div class="row">
+                        <div class="form-group text-left col-md-4 col-sm-12">
+                          <label >Área Solicitada</label>
+                          <select class="select2 form-control block" 
+                            [(ngModel)]="projectStep3Investment_area.nid_area" [disabled]="isEditInvestmentArea"
+                            (change)="ChangeInvestmentArea()">
+                            <option value="0" checked>-- Seleccione --</option>
+                            <option *ngFor="let item of listCategory" [value]="item.nid_mastertable_type" >
+                              {{item.sshort_value}}</option>
+                            <!-- <span class="mensaje-error-control">El campo Cliente es obligatorio</span> -->
+                          </select>
+                            <div 
+                              *ngIf="isNidAreaNull"
+                              class="mensaje-error-control mensaje-error-span"
+                              style="margin-top: 10px;"
+                            >
+                              Seleccionar área
+                            </div>
+                        </div>
+                        <div class="form-group text-left col-md-4 col-sm-12">
+                          <label for="sdocumentnumber">% Asignación</label>
+                          <input type="number" name="" id="" class="form-control" 
+                            required
+                            maxlength="3"
+                            #nhours_assgined = "ngModel"
+                            [(ngModel)]="projectStep3Investment_area.investment_percentage">
+                            <div 
+                              *ngIf="isInvestmentPercentageNull"
+                              class="mensaje-error-control mensaje-error-span"
+                              style="margin-top: 10px;"
+                            >
+                              Asignar porcentaje
+                            </div>
+                        </div>
+                        <div class="form-group text-left col-md-4 col-sm-12">
+                          <label>&nbsp;</label>
+                          <div class="form-actions">
+                            <button *ngIf="!projectDisable" type="button" class="btn btn-outline-info btn-active" (click)="AddInvestment_area()">
+                              &nbsp;{{nameBtnAddInvestment_area}}
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="row">                    
+                        <div class="form-group">
+                          <div class="col-md-12">
+                            <div class="table-responsive">
+                              <table class="table table-striped table-bordered" style="table-layout: fixed;">
+                                <thead>
+                                  <tr>                                                                       
+                                    <th scope="col" style="text-align: center">Área</th>              
+                                    <th scope="col" style="text-align: center">% Asignación</th>
+                                    <th scope="col" style="text-align: center">Acciones</th>
+                                    <th scope="col" style="text-align: center">Área Responsable</th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                    <tr  *ngFor="let item of projectStep3.listInvestment_area; let i = index" >
+                                      <div *ngIf="item.sactive!='D'" style="display: contents;">
+                                        <td >{{item.snamearea}}</td>
+                                        <td >{{item.investment_percentage}}</td>
+                                        <td >
+                                          <a  *ngIf="!projectDisable"  title="Editar" (click)="EditInvestment_area(item)"> <i
+                                            class="la la-edit"></i> </a>
+                                          <a  *ngIf="this.nameBtnAddInvestment_area!='Actualizar' && !projectDisable"  title="Eliminar" (click)="DelInvestment_area(item)"> <i
+                                            class="fas fa-trash"></i></a>
+                                        </td>
+                                        <td >
+                                          <div class="custom-control custom-switch">
+                                            <input type="checkbox" class="custom-control-input" [id]="i + 'nid_area'" [(ngModel)]="item.manager_area" (change)="onChange(i,item.manager_area)">
+                                            <label class="custom-control-label" [for]="i + 'nid_area'"></label>
+                                          </div>
+                                        </td>
+                                    </div>
+                                    </tr>
+                                  </tbody>
+                              </table>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      
+                      <!--Costos externos-->
+                      <div class="row">
+                        <div class="col-md-3 col-sm-6"><h6>Costos Externos</h6></div>
+                        <div class="col-md-3 col-sm-6" style="text-align: left;">
+                          <a  title="Agregar" (click)="AddCost()"> <i
+                            class="la la-plus-circle"></i> </a>
+                          <!--<input  type="button" (click)="AddCost()" class="btn azul continuar btn-crecer" value="+" style="border-radius: 50%; height:20px; width: 20px;"/>-->
+                        </div>
+                      </div>
+                      <div  *ngFor="let item of projectStep3.listCost; let i = index">
+                        <div class="row" *ngIf="item.sactive=='A'">
+                          <div class="col-md-3 col-sm-4">
+                            <input type="text" name="descripcionCosto" id="" [(ngModel)]="item.sexternal_cost" placeholder="Ingrese el costo" class="form-control txt-sin-border"
+                            oninput="this.value = this.value.toUpperCase()">
+                          </div>
+                          <div class="form-group text-left col-md-2 col-sm-4">
+                            <!-- <label>Costo Externo 1</label>-->
+                            <input type="number" name="Total" id="" class="form-control" [(ngModel)]="item.namount" (change)="ChangeTotalCostExt()"
+                            (keypress)="currencyCheck($event, item.namount)"
+                            onkeydown="return event.key !== 'e'&& event.key !== 'E' && event.key !== '+' && event.key !== '-'">
+                          </div>
+                          <div class="form-group text-left col-md-2 col-sm-2" style="text-align: left;">
+                            <a  title="Eliminar" (click)="DelCost(i)"> <i
+                              class="la la-times-circle"></i> </a>
+                          </div>
+                        </div>
+                        
+                      </div>
+                      <div class="row">
+                        <div class="col-md-3 col-sm-6"><h6>Total Costos Externos</h6></div>
+                        <div class="form-group text-left col-md-4 col-sm-6">                       
+                    
+                         <input type="number" name="Total" id="" class="form-control" [(ngModel)]="projectStep3.ntotal_external_cost" disabled
+                         onkeydown="return event.key !== 'e'&& event.key !== 'E' && event.key !== '+' && event.key !== '-'">
+                      </div>
+                      </div>
+
+                      <!--Guardar y seguir-->
+                      <div class="row">
+                        <div class="col-sm-3">
+                          <button *ngIf="!projectDisable" type="button" class="btn btn-outline-info btn-active"  (click)="saveTab3()">
+                            <i class="la la-file-o"></i>&nbsp;Guardar y Seguir
+                          </button>
+                        </div>
+                      </div>
+                  </mat-tab>
+                  <mat-tab id="tab-4" [disabled]="step04Disabled" *ngIf="step4Flag" label="Paso04">
+                      <br>
+                      <div class="row">
+                        <div class="form-group col-md-2 col-sm-2"></div>
+                        <div class="form-group col-md-6 col-sm-12">
+                        <div class="input-group">
+                        <input type="text" name="filename" class="form-control" #filename
+                        style="height: calc(2.05rem + 2px) !important;" placeholder="Selecciona Archivo"  [(ngModel)]="nameFileCargado"
+                        readonly>
+                        <span class="input-group-btn">
+                        <div class="btn btn-outline-info btn-active custom-file-uploader">
+                        <input type="file" name="file" class="btn-file" #fileInput (change)="onFileChanged($event)" accept="application/vnd.ms-project"
+                        onchange="this.form.filename.value = this.files.length ? this.files[0].name : ''"  />
+                        Examinar...
+                        </div>
+                        </span>
+                        </div>
+                        <div style="margin: 10px;"><p>Sólo archivos de Microsoft Project (.mpp)</p></div>
+                          <div
+                            *ngIf="selectedFile==undefined"
+                            class="mensaje-error-control mensaje-error-span"
+                          >
+                            Campo Requerido
+                          </div>
+                        </div>
+                        <iframe id="ifrmTemplate" name="ifrmTemplate" style="display: none;"></iframe>
+                        <div class="form-group col-md-2 col-sm-5">
+                          <button *ngIf="!projectDisable" id="btnNuevo" type="button" (click)="saveTab4()" class="btn btn-outline-info btn-active">
+                            Subir<i class="fa fa-cloud-upload"style="margin-left: 10px"></i></button>
+                        </div>
+                        <!-- <div class="form-group col-md-2 col-sm-12"></div> -->
+                        <!-- <div class="form-group col-md-2 col-sm-5">
+                          <button class="btn continuar ama borrar" (click)="DelFile()">
+                            Borrar<i class="fas fa-trash-alt" style="margin-left: 10px"></i></button>
+                        </div> -->
+                        <!-- <div class="form-group col-md-2 col-sm-12">
+                        <button id="btnNuevo" type="button" class="btn btn-outline-info btn-active"
+                        OnClientClick="this.disabled=true" UseSubmitBehavior="False">
+                        <i class="fa fa-cloud-download"></i>&nbsp;Descargar Plantilla</button>
+                        </div> -->
+                        </div>
+                        <hr>
+                        <div class="row">
+                          <div class="form-group col-md-1 col-sm-1"></div>               
+                          <div class="col-md-3 col-sm-6"><h5>Resultados</h5></div>
+                          
+                        </div>
+                      <div class="row">
+                        <div class="form-group col-md-1 col-sm-1"></div>
+                        <div class="form-group"  style="max-width: 100%;">
+                          <div class="col-md-12">
+                            <div class="table-responsive">
+                              <table class="table table-striped table-bordered">
+                                <thead>
+                                  <tr>
+                                    
+                                    <th scope="col" style="text-align: center">Item</th>
+                                    <th scope="col" style="text-align: center;width: 280px;">Actividad</th>              
+                                    <th scope="col" style="text-align: center">Horas Estimadas</th>
+                                    <th scope="col" style="text-align: center">Fecha Inicio</th>
+                                    <th scope="col" style="text-align: center">Fecha Fin</th>
+                                    
+                                  </tr>
+                                </thead>
+                                                                
+                                  <tbody>
+                                    <tr *ngFor="let item of listProjectStep4Detail; let i = index"> 
+                                      <td style="max-width: 30px;">{{i+1}}</td>                                   
+                                      <td style="text-align: left;width: 280px;">{{item.name}}</td>
+                                      <td style="max-width: 40px;">{{item.duration}}</td>
+                                      <td style="max-width: 100px;">{{item.start | date: "dd/MM/yyyy" }}</td>
+                                      <td style="max-width: 100px;">{{item.finish | date: "dd/MM/yyyy" }}</td>
+                                      
+                                    </tr>
+                                  </tbody> 
+                              </table>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                  </mat-tab>
+                  <mat-tab id="tab-5" [disabled]="step05Disabled"  label="Confirmación">
+                      <br>
+                      <div class="row">
+                        <div class="col-md-3 col-sm-6"><h6>Ingresos<br>Esperados ({{moneySymbolS}})</h6></div>
+                                                               
+                        <div class="form-group text-left col-md-4 col-sm-6">
+                          <!-- <label>Costo Externo 1</label>-->
+                          <input type="text" name="Total" id="" class="form-control" (change)="ChangeUtilidadBruta()" [(ngModel)]="projectStep2.nexpected_income" disabled>
+                        </div>                        
+                      </div>
+                      <div class="row">                  
+                        <div class="col-md-3 col-sm-6"><h6>Total Inversión ({{moneySymbolS}})</h6></div>
+                        <div class="form-group text-left col-md-4 col-sm-6">           
+                    
+                         <input type="text" name="Total" id="" class="form-control" (change)="ChangeUtilidadBruta()" [(ngModel)]="projectStep3.ntotal_investment" disabled>
+                        </div>
+                      </div>
+                      <div class="row">                  
+                        <div class="col-md-3 col-sm-6"><h6>Total Costos<br>Externos ({{moneySymbolS}})</h6></div>
+                        <div class="form-group text-left col-md-4 col-sm-6">           
+                    
+                         <input type="text" name="Total" id="" class="form-control" (change)="ChangeUtilidadBruta()" [(ngModel)]="projectStep3.ntotal_external_cost" disabled>
+                        </div>
+                      </div>
+                      <div class="row">                  
+                        <div class="col-md-3 col-sm-6"><h6>-</h6></div>
+                        
+                      </div>
+                      <div class="row">                  
+                        <div class="col-md-3 col-sm-6"><h6>Utilidad Bruta<br>Esperada({{moneySymbolS}})</h6></div>
+                        <div class="form-group text-left col-md-4 col-sm-6">           
+                    
+                         <input type="text" name="Total" id="" class="form-control" [(ngModel)]="projectStep5.nexpected_utility" disabled>
+                        </div>
+                      </div>
+                      <div class="row">                  
+                        <div class="col-md-3 col-sm-6"><h6>Margen %</h6></div>
+                        <div class="form-group text-left col-md-4 col-sm-6">           
+                    
+                         <input type="text" name="Total" id="" class="form-control" [(ngModel)]="projectStep5.nmargin" disabled>
+                        </div>
+                      </div>                      
+                  </mat-tab>
+                </mat-tab-group>
+              </div>
+            </div>
+          </div>
+        </div>
+        <br>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <div class="container">
+      <div class="row mt-2 text-center">
+        <div class="col-sm-3"></div>
+        <div  class="col-sm-3">
+          <button *ngIf="(selectedIndex==4 && !projectDisable) || (!step4Flag && selectedIndex==3 && !projectDisable )" class="btn btn-outline-info btn-active" (click)="ConfirmSaveTab5()">
+            <i class="la la-save"></i>&nbsp;Guardar 
+          </button>
+        </div>
+        <div class="col-sm-3">
+          <button (click)="closeModal();" class="btn btn-outline-info btn-active">
+            <i class="la la-close"></i>&nbsp;Cerrar
+          </button>
+        </div>
+        <div class="col-sm-3"></div>
+      </div>
+    </div>
+  </div>
+  <!-- <ng-template #modalRegistroHitos let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title">{{titleHitosModal}}</h4>
+    </div>
+    <app-registro-hitos  (registroHitosClicked)="registroHitosClicked($event)" [totalHito]="projectStep2.nexpected_income" [scodproject]="project.scodproject" [nid_project_step2]="projectStep2.nid_project_step2" [porcentajeActual]="porcentajeActual" [fechaIniProj]="fechaIniProj" [fechaFinProj]="fechaFinProj"></app-registro-hitos>
+  </ng-template> -->
+  
+  <ngx-spinner name="SpinnerProject" bdColor="rgba(51,51,51,0.8)" size="large" color="#fff" type="ball-spin-clockwise" [fullScreen] = "true">
+     <p style="color: white">Please Wait. </p>  
+  </ngx-spinner>

@@ -1,0 +1,89 @@
+<div class="container">
+  <div class="row h-100">
+    <div class=" col-sm-12  my-auto">
+      <div class="login-area col-xs-12 col-md-4 mx-auto">
+        <!-- <img src="assets/images/iconsux/logo-crecer.svg"> -->
+        <img src="assets/images/logo/logo-efitec.png" style="width: 250px !important;">
+
+        <!-- INICIO Alerta -->
+        <div *ngIf="mensajeValidacionServidor" class="alert bg-danger alert-icon-left alert-dismissible mb-2"
+          role="alert" data-appear="appear" data-animation="zoomIn">
+          <span class="alert-icon"><i class="la la-thumbs-o-down"></i></span>
+          {{mensajeValidacionServidor}} 
+        </div>
+        <div *ngIf="flagResetPassword" class="alert bg-warning alert-icon-left alert-dismissible mb-2" role="alert">
+          <span class="alert-icon"><i class="la la-warning"></i></span>
+          {{mensajeValidacionReset}}
+        </div>
+        <!-- FIN Alerta -->
+        <form class="form-horizontal" #f="ngForm" novalidate>
+
+          <fieldset class="form-group position-relative has-icon-left">
+            <label class="txt-azul" for="usuario">Usuario</label>
+            <input type="text" class="form-control" id="suser" name="suser" required [(ngModel)]="userParams.suser"
+              #SUSER="ngModel" placeholder="Tu usuario" (keyup)="clearMensaje('usuario')">
+            <div class="form-control-position"><i class="ft-user"></i></div>
+            <div *ngIf="mensajeValidacionUsuario" class="badge block badge-danger">
+              {{mensajeValidacionUsuario}}</div>
+          </fieldset>
+
+          <fieldset class="form-group position-relative has-icon-left">
+            <label for="pass">Contraseña</label>
+            <input type="password" class="form-control" id="spassword" name="spassword"
+              [(ngModel)]="userParams.spassword" placeholder="Ingresa contraseña" required
+              (keyup)="clearMensaje('password')">
+            <div class="form-control-position"><i class="la la-key"></i></div>
+            <div *ngIf="mensajeValidacionPassword" class="badge block badge-danger">
+              {{mensajeValidacionPassword}}</div>
+          </fieldset>
+
+          <fieldset *ngIf="flagResetPassword" class="form-group position-relative has-icon-left">
+            <label class="txt-azul" for="usuario">Nueva contraseña</label>
+            <input type="password" class="form-control" id="SPASSWORD01" #password="ngModel" autocomplete="nope"
+              name="SPASSWORD01" [(ngModel)]="newPassword01" placeholder="Nueva contraseña" required
+              pattern="(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[$@$!%*?&_])[A-Za-z\d$@$!%*?&_].{8,}"
+              (keyup)="clearMensaje('password')" [ngModelOptions]="{ updateOn: 'blur' }" (blur)="validPasswords(1)">
+            <div class="form-control-position"><i class="la la-key"></i></div>
+            <div *ngIf="!password.valid && flagSave01 && !passwordsEquals" class="badge block badge-danger">
+              <span> *Letras minúsculas y mayúsculas.</span> <br />
+              <span> *Al menos un número y un símbolo</span> <br />
+              <span> *8 o más caracteres.</span>
+            </div>
+            <div *ngIf="passwordsEquals" class="badge block badge-danger">Las contraseñas no coinciden</div>
+          </fieldset>
+
+          <fieldset *ngIf="flagResetPassword" class="form-group position-relative has-icon-left">
+            <label class="txt-azul" for="usuario">Repetir contraseña</label>
+            <input autocomplete="off" type="password" class="form-control" id="SPASSWORD02" #password2="ngModel" name="SPASSWORD02"
+              autocomplete="nope" pattern="(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[$@$!%*?&_])[A-Za-z\d$@$!%*?&_].{8,}"
+              [(ngModel)]="newPassword02" placeholder="Repetir nueva contraseña" required
+              (keyup)="clearMensaje('password')" [ngModelOptions]="{ updateOn: 'blur' }" (blur)="validPasswords(2)">
+            <div class="form-control-position"><i class="la la-key"></i></div>
+            <div *ngIf="!password2.valid && flagSave02 && !passwordsEquals" class="badge block badge-danger">
+              <span> *Letras minúsculas y mayúsculas.</span> <br />
+              <span> *Al menos un número y un símbolo</span> <br />
+              <span> *8 o más caracteres.</span>
+            </div>
+            <div *ngIf="passwordsEquals" class="badge block badge-danger">Las contraseñas no coinciden</div>
+          </fieldset>
+
+          <fieldset class="form-group position-relative has-icon-left">
+            <div class="g-recaptcha">
+              <re-captcha (resolved)="validateCaptcha($event)" siteKey="{{siteKey}}" 
+              name="captcha" data-size="normal"  required>
+              </re-captcha>
+            </div>
+          </fieldset>
+
+          <div class="form-group col-md-8 mx-auto">
+            <!-- <input type="submit" value="INGRESAR" class="form-control" id="ingresar"> -->
+            <button type="submit" class="btn btn-outline-info btn-block" (click)="serviceLogin(f)">
+              <i *ngIf="flagLoginBtn" class="la la-spinner spinner"></i>
+              <i *ngIf="!flagLoginBtn" class="ft-unlock"></i>Ingresar</button>
+          </div>
+
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

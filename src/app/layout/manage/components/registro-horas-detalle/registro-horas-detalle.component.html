@@ -1,0 +1,289 @@
+<div class="modal-header">
+  <h4 class="modal-title">{{titleProjectModal}}</h4>
+</div>
+<div class="modal-body">
+  <!-- INICIO Filtro -->
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="card">
+        <div class="card-header">
+          <h2 class="text-center">{{tituloProject}}</h2>
+          <!-- <h4 class="card-title"> Detalle del registro de hora </h4> -->
+          <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
+        </div>
+        <div class="card-content collapse show">
+          <div class="card-body">
+            <div class="form-body">
+              <div class="row">
+                
+                <div class="form-group col-md-1 col-sm-12">
+                </div>
+
+                <div class="form-group col-md-3 col-sm-12">
+                  <label>Cantidad de horas (por día)</label>
+                  <input type="number" name="" id="" class="form-control" [(ngModel)]="projectHoursLog.nnumber_hours" max="8" min="0"
+                  onkeydown="return event.key !== 'e'&& event.key !== 'E' && event.key !== '+' && event.key !== '-'&& event.key !== '.'"
+                  (change)="projectHoursLog.nnumber_hours < 0 ? projectHoursLog.nnumber_hours = 0 : projectHoursLog.nnumber_hours; projectHoursLog.nnumber_hours > 8 ? projectHoursLog.nnumber_hours = 8 : projectHoursLog.nnumber_hours;"
+                  >
+                </div>
+
+                <div class="form-group col-md-1 col-sm-12">
+                </div>
+
+                <div class="form-group col-md-5 col-sm-12">
+                  <label >Fecha de registro</label>
+                  <div class="input-group input-daterange">
+                    <input [disabled]="(!registroBloque)" type="date" class="form-control" [(ngModel)]="dateString" (blur)="cambioFechaInicio()" >
+                    <div *ngIf="registroBloque" class="input-group-addon">hasta</div>
+                    <input *ngIf="registroBloque" type="date" class="form-control" [(ngModel)]="dateRangeString" (blur)="cambioFechaFin()">
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="form-group col-md-1 col-sm-12">
+                </div>
+                <div class="form-group col-md-3 col-sm-12">
+                  <label >Fase </label>
+                  <select class="select2 form-control block" required [(ngModel)]="projectHoursLog.nid_phase" >
+                    <option value="0">-- Seleccione --</option>
+                    <option *ngFor="let item of listFases" [value]="item.nid_mastertable_type" >
+                      {{item.sshort_value}}</option>
+                  </select>
+                </div>
+                <div class="form-group col-md-1 col-sm-12">
+                </div>
+                <div class="form-group col-md-5 col-sm-12">
+                  <label >Miembro de Equipo</label>
+                  <select class="select2 form-control block" [(ngModel)]="project.nid_manager" 
+                          [disabled]="ManagerDisabled" (change)="getProjectHoursLogPagination();">
+                    <option *ngIf = "ManagerDisabled == true"  [value]="user.nid_person">{{user.sfullname}}</option>
+                    <option *ngFor="let item of listProjectEstimate" [value]="item.nid_person">
+                      {{item.sperson}}</option>
+                    <!-- <span class="mensaje-error-control">El campo Cliente es obligatorio</span> -->
+                  </select>
+                </div>
+              </div>
+              <div class="row" *ngIf="!ManagerDisabled">
+                <div class="form-group col-md-1 col-sm-12">
+                </div>
+                <div class="form-group col-md-3 col-sm-12">
+                  <label >Categoría</label>
+                  <select class="select2 form-control block" [(ngModel)]="typeHour" 
+                          [disabled]="ManagerDisabled" (change)="getPersonalExt(typeHour)">
+                    <option *ngIf = "ManagerDisabled == true" value="0">--</option>
+                    <option *ngFor="let item of listCategoriaHora" [value]="item.nid_mastertable_type">
+                      {{item.sshort_value}}</option>
+                    <!-- <span class="mensaje-error-control">El campo Cliente es obligatorio</span> -->
+                  </select>
+                </div>
+                <div class="form-group col-md-1 col-sm-12">
+                </div>
+                <div class="form-group text-left col-md-4 col-sm-12" >
+                  <label > Proveedor o Personal Externo </label>
+                  <select class="select2 form-control block" [(ngModel)]="typePerExt" 
+                          [disabled]="ManagerDisabled" (change)="getProjectHoursExtPagination()">
+                    <option value="0">-- Seleccione --</option>
+                    <option *ngFor="let item of listPersonalExt" [value]="item.nid_external">
+                      {{item.edescription}}</option>
+                    <!-- <span class="mensaje-error-control">El campo Cliente es obligatorio</span> -->
+                  </select>
+                </div>
+                <div class="form-group col-md-2 col-sm-12" style="padding-left: 0px;padding-right: 0px;">
+                  <div style="padding-top: 22px;">
+                    <button *ngIf="!projectDisable" type="button" class="btn btn-outline"  (click)="AddProvExt()">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus" viewBox="0 0 16 16">
+                        <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
+                      </svg>
+                    </button>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="form-group col-md-1 col-sm-12">
+                </div>
+                <div class="form-group text-left col-md-7 col-sm-12" >
+                  <label > Descripción </label>
+                  <input type="text" name="" id="textarea" class="form-control" maxlength="300" 
+                  [(ngModel)]="projectHoursLog.sdescription"
+                  oninput="this.value = this.value.toUpperCase()">
+                </div>
+                <div class="form-group col-md-2 col-sm-12">
+                  <label>&nbsp;</label>
+                  <div class="form-actions">
+                    <button *ngIf="!projectDisable" type="button" class="btn btn-outline-info btn-active"  (click)="saveHoursLog()">
+                      <i class="la la-file-o"></i>&nbsp;{{tituloBoton}}
+                    </button>
+                  </div>
+                </div>
+              </div>
+            
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- FIN Filtro -->
+  
+
+  <section id="configuration">
+    <div class="">
+      <div class="">
+        <div class="card">
+          <div class="card-header">
+            <div style="display: flex;">
+              <div style="padding-left: 15px;padding-top: 10px;"><h4 class="card-title">Lista de Horas Asignadas</h4></div>
+              <div *ngIf="!ManagerDisabled || !ManagerAreaDisabled" class="form-group col-md-3 col-sm-12">
+                <div class="border border-opacity-10 rounded">
+                  <div style="padding: 4px;text-align: center;">
+                    <div class="form-check">
+                      <input class="form-check-input" type="checkbox" [disabled]="enabledHourExtra" [(ngModel)]="isTypeExtra" id="flexCheckDefault" (change)="getProjectHoursExtra()">
+                      <label class="form-check-label" for="flexCheckDefault" style="padding-top: 4px;">
+                        Filtrar Horas Extras
+                      </label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="">
+            <div class="">
+              <div class="">
+                
+                <div class="">
+                  <div class="">
+                    <div class="" style="padding-left: 20px; padding-right: 20px;">
+                      <table class="table table-striped table-bordered" >
+                        <thead>
+                          <tr>
+                            <th scope="col" style="text-align: center">N°</th>              
+                            <th scope="col" style="text-align: center">Nombre</th>
+                            <th scope="col" style="text-align: center">Registro</th>
+                            <th scope="col" style="text-align: center">N° Horas</th>
+                            <th scope="col" style="text-align: center">Fase</th>
+                            <th scope="col" style="text-align: center;">Descripción</th>
+                            <th scope="col" style="text-align: center"></th>
+                            <th scope="col" style="text-align: center" *ngIf="!ManagerDisabled">JP</th>
+                            <th scope="col" style="text-align: center" *ngIf="!ManagerAreaDisabled">G</th>
+                          </tr>
+                        </thead>
+                        <div *ngIf="!thereAreProjectsLoad(); then NoexistenRegistro  else MostrarRegistro"></div>
+                        <ng-template #NoexistenRegistro>
+                          <tbody>
+                            <tr>
+                              <td colspan="8" style="text-align: center;">No se encontraron resultados para la
+                                Búsqueda</td>
+                            </tr>
+                          </tbody>
+                        </ng-template>
+                        <ng-template #MostrarRegistro>
+                          <tbody>
+                            <tr  *ngFor="let item of listProjectHoursLog; let i = index" >
+                              <td style="text-align: center;" >{{i+1}}</td>
+                              <td *ngIf="typePerExt==0">{{item.sperson}}</td>
+                              <td *ngIf="typePerExt!=0">{{item.edescription}}</td>
+                              <td >{{item.dregistration_date | date: "dd/MM/yyyy"}}</td>
+                              <td style="text-align: center;">{{item.nnumber_hours}}</td>
+                              <td style="text-align: center;">{{item.sphase}}</td>
+                              <td style="width: 150px;">
+                                {{item.sdescription}}
+                              </td>
+                              <td style="width: 50px;">
+                                <!-- Editar y eliminar para (JP y los demas) y stype 1 -->   
+                                <a *ngIf="(item.sstate!='A' || !ManagerDisabled) && !projectDisable && item.stype==1" title="Editar" (click)="EditHoursLog(item)" style="margin-right: 5px;"> <i
+                                  class="la la-edit"></i>1 </a>
+                                <a  *ngIf="(item.sstate!='A' || !ManagerDisabled) && !projectDisable && item.stype==1" title="Eliminar" (click)="DelHoursLog(item)"> <i
+                                  class="fas fa-trash"></i></a>
+                                <!-- Editar y eliminar para JP y stype 2 y estado Pendiente y si nos es Gerente de Área -->   
+                                <a *ngIf="item.sstate!='A' && !ManagerDisabled && !projectDisable && item.stype!=1 && ManagerAreaDisabled" title="Editar" (click)="EditHoursLog(item)" style="margin-right: 5px;"> <i
+                                  class="la la-edit"></i>2 </a>
+                                <a  *ngIf="item.sstate!='A' && !ManagerDisabled && !projectDisable && item.stype!=1 && ManagerAreaDisabled" title="Eliminar" (click)="DelHoursLog(item)"> <i
+                                  class="fas fa-trash"></i></a>
+                                <!-- Editar y eliminar para Gerente de area y stype 1 -->  
+                                <a *ngIf="(!ManagerAreaDisabled) && !projectDisable && item.stype!=1" title="Editar" (click)="EditHoursLog(item)" style="margin-right: 5px;"> <i
+                                  class="la la-edit"></i>3 </a>
+                                <a  *ngIf="(!ManagerAreaDisabled) && !projectDisable && item.stype!=1" title="Eliminar" (click)="DelHoursLog(item)"> <i
+                                  class="fas fa-trash"></i></a>
+                              </td>
+                              <!--JP-->
+                              <td *ngIf="!ManagerDisabled" style="width: 40px;text-align: center;">
+                                <a *ngIf="!ManagerDisabled && item.sstate=='P' && !projectDisable && item.stype==1" title="Aprobar" (click)="ApproveHoursLog(item,0)" style="margin-right: 5px;"> <i
+                                  class="la la-check-square"></i></a>
+                              </td>
+                              <!--G-->
+                              <td *ngIf="!permisoAdministrativo && !ManagerAreaDisabled" style="width: 40px;text-align: center;">
+                                <a *ngIf="item.sstate!='A' && !projectDisable && !ManagerAreaDisabled && item.stype!=1" title="Aprobación Gerencia" (click)="ApproveHoursLog(item,1)" style="margin-right: 5px;"> 
+                                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check-circle" viewBox="0 0 16 16">
+                                    <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                                    <path d="M10.97 4.97a.235.235 0 0 0-.02.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-1.071-1.05z"/>
+                                  </svg>
+                                </a>
+                              </td>
+                              <td *ngIf="permisoAdministrativo && !ManagerAreaDisabled" style="width: 40px;text-align: center;">
+                                <a [ngClass]="{'disabled-link': item.sstate == 'P' || ManagerDisabled  || projectDisable}" *ngIf="ManagerDisabled && !(item.sstate=='A2') && !projectDisable" title="Aprobación Gerencia" (click)="ApproveHoursLog(item,1)" style="margin-right: 5px;"> 
+                                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check-circle" viewBox="0 0 16 16">
+                                    <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                                    <path d="M10.97 4.97a.235.235 0 0 0-.02.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-1.071-1.05z"/>
+                                  </svg>
+                                </a>
+                              </td>
+                            </tr>
+                          </tbody>
+                          <br>
+                        </ng-template>
+                      </table>
+                    </div>
+                  </div>
+                  <div class="col-md-12">
+                    <div class="row">
+                      <label class="col-md-2">Registros por Página</label>
+                      <div class="col-md-2">
+                        <select class="select2 form-control input-sm" (change)="ChangeRecordByPage()"
+                          [(ngModel)]="itemsPerPage">
+                          <option value=5>5</option>
+                          <option value=10>10</option>
+                          <option value=15>15</option>
+                          <option value=20>20</option>
+                        </select>
+                      </div>
+                      <div class="col-md-8">
+                        <div class="d-flex justify-content-end">
+                          
+                          <ngb-pagination [collectionSize]="totalItems" [pageSize]="itemsPerPage"
+                            [(page)]="currentPage"  [rotate]="true" (pageChange)="pageChanged($event)">
+                          </ngb-pagination>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+  </section>
+  <!-- FIN Tabla Tabla Listado de Errores -->
+</div>
+<div class="modal-footer">
+  <div class="container">
+    <div class="row mt-2 text-center">
+      <div class="col-md-9 col-sm-6"></div>
+      
+      <div class="col-md-3 col-sm-6">
+        <button (click)="closeModal()" class="btn btn-outline-info btn-active">
+          <i class="la la-close"></i>&nbsp;Cerrar
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<iframe id="ifrmTemplate" name="ifrmTemplate" style="display: none;"></iframe>
+<a id="afile" name="afile" style="display: none;"></a>
+
+<ngx-spinner name="SpinnerProject"></ngx-spinner>

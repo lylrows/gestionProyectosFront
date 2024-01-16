@@ -1,0 +1,17 @@
+.img-menu {
+  width: 20px;
+  margin-right: 10px;
+}
+
+.cls-blue {
+  fill: #005ca8;
+}
+
+.cls-white {
+  fill: #fff !important;
+}
+
+
+.main-menu.menu-dark .navigation > li ul li > a {
+  white-space: break-spaces;
+}

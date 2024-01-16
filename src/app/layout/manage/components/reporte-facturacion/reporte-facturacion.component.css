@@ -1,0 +1,8 @@
+.circulooo{
+    width: 30px;
+    height: 30px;
+    -moz-border-radius: 50%;
+    -webkit-border-radius: 50%;
+    border-radius: 50%;
+    background: hsl(120, 10%, 96%);
+}

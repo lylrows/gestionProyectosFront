@@ -1,0 +1,62 @@
+@font-face {
+  font-family: 'CenturyGothic';
+  src:
+    url('src/assets/fonts/fontsux/CenturyGothic.woff') format('woff'),
+    /* Pretty Modern Browsers */
+    url('src/assets/fonts/fontsux/CenturyGothic.ttf') format('truetype');
+  /* Safari, Android, iOS */
+}
+
+
+.container {
+  height: 100%;
+}
+
+.login-area {
+  background: white;
+  border-radius: 70px;
+  padding: 40px 60px;
+  font-size: 1rem !important;
+  font-family: 'CenturyGothic', sans-serif !important;
+}
+
+.login-area img {
+  margin-bottom: 20px;
+}
+
+#ingresar {
+  background-color: #0a5696;
+  color: white;
+}
+
+input[type="text"],
+input[type="password"] {
+  border: 1px solid #305596 !important;
+}
+
+input {
+  border-radius: 25px !important;
+}
+
+
+input[type="submit"] {
+  border: none;
+  margin-top: 25px;
+}
+
+
+input[type="submit"]:hover {
+  background-color: #ffcc33 !important;
+  color: white;
+}
+
+label {
+  color: #305596;
+}
+
+.g-recaptcha {
+  transform: scale(0.82);
+  -webkit-transform: scale(0.82);
+  transform-origin: 0 0;
+  -webkit-transform-origin: 0 0;
+}

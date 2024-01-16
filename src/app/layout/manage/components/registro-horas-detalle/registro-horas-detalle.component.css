@@ -1,0 +1,8 @@
+.width-7{
+    width:14.28571428571429%;
+}
+
+.disabled-link {
+    pointer-events: none;
+    opacity: 0.5;
+  }

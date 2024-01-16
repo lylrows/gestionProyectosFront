@@ -1,0 +1,16 @@
+.xlModal > .modal-dialog {
+    max-width: 1490px !important;
+    min-width: 971px !important;   
+    width: 95% !important;
+}
+::ng-deep .my-class .modal-dialog { 
+    max-width: 80%;
+    width: 80%;
+}
+::ng-deep .modal-lg{
+    max-width: 1500px!important;
+}
+.width-6{
+    width:16.66666666666667%;
+}
+

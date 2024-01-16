@@ -1,0 +1,162 @@
+{
+  "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+  "version": 1,
+  "newProjectRoot": "projects",
+  "projects": {
+    "Presentation.PlataformaDigital": {
+      "projectType": "application",
+      "schematics": {},
+      "root": "",
+      "sourceRoot": "src",
+      "prefix": "app",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist/presentation.plataforma-digital",
+            "index": "src/index.html",
+            "main": "src/main.ts",
+            "polyfills": "src/polyfills.ts",
+            "tsConfig": "tsconfig.app.json",
+            "assets": [
+              "src/favicon.ico",
+              "src/assets",
+              "src/manifest.json"
+            ],
+            "styles": [
+              "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
+              "src/styles.css",
+              "node_modules/ngx-spinner/animations/ball-spin-clockwise.css",
+              "src/assets/vendors/css/extensions/sweetalert.css",
+              "src/assets/vendors/css/forms/spinner/jquery.bootstrap-touchspin.css",
+              "src/assets/vendors/css/forms/icheck/icheck.css",
+              "src/assets/vendors/css/forms/toggle/bootstrap-switch.min.css",
+              "src/assets/vendors/css/forms/toggle/switchery.min.css",
+              "src/assets/vendors/css/forms/icheck/custom.css",
+              "src/assets/vendors/css/tables/datatable/datatables.min.css",
+              "src/assets/css/core/menu/menu-types/vertical-menu-modern.css",
+              "src/assets/css/style.css",
+              "src/assets/css/core/colors/palette-gradient.css",
+              "src/assets/css/plugins/animate/animate.css",
+              "src/assets/fonts/line-awesome/css/line-awesome.min.css",
+              "src/assets/css/core/colors/palette-callout.css",
+              "src/assets/vendors/css/forms/selects/select2.min.css",
+              "src/assets/css/pages/login-register.css",
+              "src/assets/vendors/css/ui/jquery-ui.min.css",
+              "src/assets/vendors/css/ui/jquery-ui-slider-pips.min.css",
+              "src/assets/css/plugins/ui/jqueryui.css",
+              "src/assets/css/plugins/forms/validation/form-validation.css",
+              "src/assets/css/plugins/forms/switch.css",
+              "src/assets/css/pages/error.css",
+              "src/assets/css/bs-datepicker.css"
+            ],
+            "scripts": [
+              "src/assets/js/core/libraries/jquery.min.js",
+              "src/assets/vendors/js/ui/popper.min.js",
+              "src/assets/js/core/libraries/bootstrap.min.js",
+              "src/assets/vendors/js/ui/perfect-scrollbar.jquery.min.js",
+              "src/assets/vendors/js/ui/unison.min.js",
+              "src/assets/vendors/js/ui/blockUI.min.js",
+              "src/assets/vendors/js/ui/jquery-sliding-menu.js",
+              "src/assets/vendors/js/extensions/sweetalert.min.js",
+              "src/assets/vendors/js/tables/datatable/datatables.min.js",
+              "src/assets/vendors/js/forms/select/select2.full.min.js",
+              "src/assets/js/scripts/tables/datatables/datatable-basic.js",
+              "src/assets/js/scripts/tables/datatables-extensions/datatables-sources.js",
+              "src/assets/js/scripts/forms/select/form-select2.js",
+              "src/assets/js/scripts/forms/form-login-register.js",
+              "src/assets/vendors/js/forms/spinner/jquery.bootstrap-touchspin.js",
+              "src/assets/vendors/js/forms/validation/jqBootstrapValidation.js",
+              "src/assets/vendors/js/forms/icheck/icheck.min.js",
+              "src/assets/vendors/js/forms/toggle/bootstrap-switch.min.js",
+              "src/assets/vendors/js/forms/toggle/switchery.min.js",
+              "src/assets/js/core/libraries/jquery_ui/jquery-ui.min.js",
+              "src/assets/vendors/js/ui/jquery-ui-slider-pips.min.js",
+              "src/assets/js/core/libraries/jquery_ui/globalize/globalize.js",
+              "src/assets/js/core/libraries/jquery_ui/globalize/cultures/globalize.culture.de-DE.js",
+              "src/assets/js/core/libraries/jquery_ui/globalize/cultures/globalize.culture.ja-JP.js",
+              "src/assets/vendors/js/extensions/jquery.mousewheel.min.js",
+              "src/assets/js/scripts/ui/jquery-ui/slider-spinner.js",
+              "src/assets/js/scripts/extensions/sweet-alerts.js",
+              "src/assets/js/scripts/ui/jquery-ui/date-pickers.js",
+              "src/assets/js/scripts/forms/validation/form-validation.js"
+            ]
+          },
+          "configurations": {
+            "production": {
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "500kb",
+                  "maximumError": "5mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "2kb",
+                  "maximumError": "4kb"
+                }
+              ],
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.prod.ts"
+                }
+              ],
+              "outputHashing": "all"
+            },
+            "development": {
+              "buildOptimizer": false,
+              "optimization": false,
+              "vendorChunk": true,
+              "extractLicenses": false,
+              "sourceMap": true,
+              "namedChunks": true
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "configurations": {
+            "production": {
+              "browserTarget": "Presentation.PlataformaDigital:build:production"
+            },
+            "development": {
+              "browserTarget": "Presentation.PlataformaDigital:build:development"
+            }
+          },
+          "defaultConfiguration": "development"
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "Presentation.PlataformaDigital:build"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "src/test.ts",
+            "polyfills": "src/polyfills.ts",
+            "tsConfig": "tsconfig.spec.json",
+            "karmaConfig": "karma.conf.js",
+            "assets": [
+              "src/favicon.ico",
+              "src/assets",
+              "src/manifest.json"
+            ],
+            "styles": [
+              "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
+              "src/styles.css"
+            ],
+            "scripts": [
+            ]
+          }
+        }
+      }
+    }
+  },
+  "cli": {
+    "analytics": "dda394e8-3cec-495d-b4aa-005b8d869fa2"
+  }
+}

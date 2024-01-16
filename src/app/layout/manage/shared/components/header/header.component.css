@@ -1,0 +1,24 @@
+.context-menu {cursor: context-menu;}
+
+.img-user{width: 30px;}
+
+label[for="share_me"]:before{content:'Bienvenido a la Plataforma de Gestión de Proyectos:'}
+
+
+
+@media (max-width: 768px) {
+    .text-span  {
+      content: 'Bienvenido';
+    }
+    label[for="share_me"]:before{content:'Bienvenido:'}
+
+    .menu-all {
+        width: 100%;
+    }
+    .user-name {
+        display: block !important;
+    }
+    .profile {
+        width: 50% !important;
+    }
+  }

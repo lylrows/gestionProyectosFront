@@ -1,0 +1,287 @@
+/*================================================================================
+	Item Name: Modern Admin - Clean Bootstrap 4 Dashboard HTML Template
+	Version: 1.0
+	Author: PIXINVENT
+	Author URL: http://www.themeforest.net/user/pixinvent
+================================================================================
+
+NOTE:
+------
+PLACE HERE YOUR OWN SCSS CODES AND IF NEEDED, OVERRIDE THE STYLES FROM THE OTHER STYLESHEETS.
+WE WILL RELEASE FUTURE UPDATES SO IN ORDER TO NOT OVERWRITE YOUR STYLES IT'S BETTER LIKE THIS.  */
+
+/* menu inicio */
+.bg-info.bg-white {
+  background-color: #ffffff !important;
+  color: black !important;
+}
+.main-menu.menu-fixed {
+  top: 4rem;
+  height: calc(100% - 4rem);
+}
+.main-menu.menu-dark .navigation > li.open > a,
+.main-menu.menu-dark .navigation > li.menu-collapsed-open > a
+{
+  background: #083153 !important;
+  color: #fff !important;
+}
+.main-menu.menu-dark .navigation > li ul .open > a
+{
+  background-color: #ff5e01c2 !important;
+  color: #fff !important;
+}
+.main-menu.menu-dark .navigation li a {
+  color: #083153  !important;
+  font-weight: 500 !important;
+}
+.main-menu.menu-dark .navigation > li ul {
+  font-size: 0.8rem !important;
+}
+.navigation {
+  font-size: 0.85rem !important;
+}
+/* menu inicio*/
+
+/* inicio footer */
+.footer.bg-crecer {
+  background-color: #083153;
+  color: #ffffff !important;
+  font-size: 10px;
+}
+footer.footer {
+  padding: .5rem !important;
+}
+.content{
+  min-height: calc(100% - 28px) !important;
+}
+/* fin footer */
+/* inicio header */
+.header-border {
+  border-bottom: solid;
+  border-color: #005ca8;
+  border-bottom-width: 6px;
+}
+
+.user-title {
+  font-size: 13px;
+}
+
+.nav-link {
+  color: black !important;
+}
+
+.logo-b {
+  height: 30px !important;
+  width: 100px !important;
+}
+
+.header-navbar{
+  min-height: 3.9rem !important;
+}
+
+.header-navbar .navbar-header {
+  height: 3.9rem !important;
+}
+
+.header-navbar .navbar-container ul.nav li a.dropdown-user-link {
+  padding: 0.5rem 1rem !important;
+}
+body.vertical-layout.vertical-menu-modern.menu-collapsed .navbar .navbar-brand {
+  padding: 10px 0 !important;
+}
+/* fin header */
+/* inicio content tittle*/
+.content-header-title{
+  margin-bottom: 0px !important;
+  font-size: 1rem !important;
+}
+.breadcrumbs-top .breadcrumb {
+  margin-bottom: 5px !important;
+  font-size: 0.8rem !important;
+}
+.card {
+  margin-bottom: 0.3rem !important;
+}
+/* fin content tittle */
+/* inicio content */
+body.fixed-navbar {
+  padding-top: 4rem !important;
+}
+.content-wrapper{
+  padding: 1rem !important;
+}
+.form-group {
+  margin-bottom: 0.5rem !important;
+}
+.card-title {
+  color: #083153 !important;
+  font-weight: 700 !important;
+  font-size: 0.75rem !important;
+}
+.card-header{
+  padding-top: 0.8rem !important;
+  padding-right: 1rem !important;
+  padding-left: 1rem !important;
+  padding-bottom: 0.5rem !important;
+}
+.card-body{
+  padding: 0.8rem !important;
+}
+.vertical-layout{
+  font-size: 0.8rem !important;
+  line-height: 1.3 !important;
+}
+.form-control {
+  font-size: 0.8rem !important;
+  height: calc(2.3rem + 2px) !important;
+}
+
+.content-header-title {
+  color: #083153 !important;
+  font-weight: 700 !important;
+}
+
+.btn {
+  color: #000000 !important;
+  border-color: #ff5e01c2 !important;
+  padding: .5rem 1rem !important;
+  font-size: 0.8rem !important;
+}
+
+.btn-active {
+  color: #fff !important;
+  background-color: #ff5e01c2 !important;
+  box-shadow: 0 14px 24px 0 rgba(62, 57, 107, .26);
+  width: 100% !important;
+}
+
+.btn:hover {
+  color: #fff !important;
+  background-color: #083153 !important;
+  box-shadow: 0 14px 24px 0 rgba(62, 57, 107, .26);
+}
+
+.la {
+  vertical-align: middle !important;
+}
+
+thead {
+  color: #FFFFFF;
+  background-color: #083153;
+  font-size: 0.82rem !important;
+}
+
+tbody {
+  font-size: 0.75rem !important;
+}
+
+.grid-img {
+  width: 15px !important;
+  height: 15px !important;
+  cursor: pointer !important;
+  margin-left: 2px !important;
+  margin-right: 2px !important;
+}
+.table th, .table td {
+  padding: 0.5rem 0.5rem !important;
+}
+/* fin content */
+
+/* inicio paginado */
+.pagination .page-link {
+  border-color: #ffffff !important;
+  font-size: 11px !important;
+  color: #005ca8 !important;
+}
+
+.page-item.disabled .page-link {
+  border-color: #ffffff !important;
+  color: #cdd1d5 !important;
+}
+
+.page-item.active .page-link {
+  border-color: #ffffff !important;
+  background-color: #005ca8 !important;
+  color: #ffffff !important;
+}
+
+.pagination {
+  margin-top: 0px !important;
+  margin-bottom: 0px !important;
+}
+.p-2 {
+  padding: 0px !important;
+}
+.number-page{
+  position: fixed !important;
+  width: 220px;
+  font-size: 11px;
+  align-items: center !important;
+}
+.custom-select{
+  height: calc(1.75rem + 2px);
+  width: 23%;
+}
+/* fin paginado */
+.mensaje-error-control {
+  color: #FD2F21;
+  font-size: 11px;
+  line-height: 12px;
+  /*border: 1px solid #000;*/
+}
+
+/* calendar */
+.bg-light {
+   background-color: #ffffff !important;
+}
+.ngb-dp-weekday {
+  color: #005ca8 !important;
+}
+.ngb-dp-week-number, .ngb-dp-weekday {
+  font-style: normal !important;
+  font-size: 10px !important;
+}
+.ngb-dp-day {
+  font-size: 11px !important;
+}
+.ngb-dp-arrow-btn{
+  padding: .1rem .3rem !important
+}
+.bg-primary {
+  background-color: #005ca8 !important;
+}
+.btn-light:hover {
+  color: #2a2e30;
+  border-color: #9ea5b0;
+  background-color: #005ca847 !important;
+}
+.btn-outline-secondary{
+  color: #fff !important;
+  background-color: #005ca8 !important;
+
+}
+  /* calendar */
+
+.home_page{
+  background-image: url('src/assets/images/backgrounds/office-work.jpg') !important;
+  background-size: cover;
+  background-position: center;
+}
+
+.table-color-crecer {
+  background: #e3ecfa !important;
+}
+
+
+.justify-content-center {
+  display: flex !important;
+  justify-content: center !important;
+}
+.justify-content-end {
+  display: flex !important;
+  justify-content: flex-end !important;
+}
+
+textarea.form-control {
+  height: auto !important;
+}

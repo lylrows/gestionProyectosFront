@@ -1,0 +1,266 @@
+<div class="app-content content bg-white">
+    <div class="content-wrapper">
+        <!-- INICIO Breadcrumbs -->
+        <div class="content-header row">
+            <div class="content-header-left col-md-6 col-12">
+                <h3 class="content-header-title">{{Title}}</h3>
+                <div class="row breadcrumbs-top">
+                    <div class="breadcrumb-wrapper col-12">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a routerLink="/manage/inicio">Inicio</a>
+                            </li>
+                            <li class="breadcrumb-item"><a routerLink="/manage/indicador-gestion">{{BreadLevel01}}</a>
+                            </li>
+                            <li class="breadcrumb-item active">{{Title}}
+                            </li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- FIN Breadcrumbs -->
+        <div class="content-body">
+            <div class="row ">
+                <div class="col-lg-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4 class="card-title"> FILTROS </h4>
+                            <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
+                        </div>
+
+                        <div class="card-content collapse show">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="form-group col-md-2 col-sm-12">
+                                        <label> Código Proyecto </label>
+                                        <mat-form-field style="width: 100%;">
+                                            <input type="text" aria-label="Number" matInput [formControl]="myControl"
+                                                [(ngModel)]="filterProject.scodproject" [matAutocomplete]="auto"
+                                                (change)="changeCodigoServicio()">
+                                            <mat-autocomplete #auto="matAutocomplete"
+                                                (optionSelected)="changeCodigoServicio()">
+                                                <mat-option *ngFor="let option of codigoProyecto | async"
+                                                    [value]="option.scodproject" style="font-size:12px">
+                                                    {{ option.scodproject }}
+                                                </mat-option>
+                                            </mat-autocomplete>
+                                        </mat-form-field>
+                                    </div>
+
+                                    <div class="form-group col-md-3 col-sm-12">
+                                        <label> Nombre Proyecto </label>
+                                        <mat-form-field style="width: 100%;">
+                                            <input type="text" aria-label="Number" matInput [formControl]="myControll"
+                                                [matAutocomplete]="auto2" [(ngModel)]="inputNombreServicio"
+                                                (change)="changeNombreServicio()">
+                                            <mat-autocomplete #auto2="matAutocomplete" style="width: 300px;"
+                                                (optionSelected)="changeNombreServicio()">
+                                                <mat-option *ngFor="let option of nombreProyecto | async"
+                                                    [value]="option.snameproject" style="font-size:12px">
+                                                    {{ option.snameproject }}
+                                                </mat-option>
+                                            </mat-autocomplete>
+                                        </mat-form-field>
+                                    </div>
+
+                                    <div class="form-group col-md-2 col-sm-12">
+                                        <label> Estado </label>
+                                        <select class="select2 form-control block" required
+                                            [(ngModel)]="filterProject.nid_status" (change)="changeEstado()">
+                                            <option value="0">-- Seleccione --</option>
+                                            <option *ngFor="let item of listState" [value]="item.nid_mastertable_type">
+                                                {{item.sshort_value}}</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="col-md-2 col-sm-12" >
+                                        <div class="form-actions">
+                                            <button type="button" class="btn btn-outline-info btn-active"
+                                                (click)="search()" style="margin-top: 15px;">
+                                                <i class="la la-search"></i>&nbsp;Consultar
+                                            </button>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-2 col-sm-12" >
+                                        <div class="form-actions">
+                                            <button type="button" (click)="downloadAsPDF()" class="btn "
+                                                style="margin-top: 15px; border: none;background: transparent; ">
+                                                <img style="width:24px;height: 24px; "
+                                                    src="../../../../../assets/icons/pdf1.png" />
+                                                &nbsp;Exportar
+                                            </button>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div [style.display]="showData ? 'block' : 'none'" class="row" style="overflow: auto !important;"  id="pruebita">
+                <div class="form-group">
+                    <div class="col-md-12">
+                        <div class="table-responsive" >
+                            <table class="table table-striped table-bordered"
+                                style="table-layout: fixed;">
+                                <thead>
+                                    <tr>
+                                        <th style="text-align: center; width: 200px !important;">Avances (S/.)
+                                        </th>
+                                        <th *ngFor="let item of arrayNumberWeek; let i = index"
+                                            style="text-align: center; width: 80px !important;"
+                                            class="hasTooltip">
+                                            S{{i+1}}
+                                            <span>Fecha Inicio: {{listSemanasStart[i] | date: 'dd/MM/yyyy'}}</span>
+                                          </th>
+                                          
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                      <th style="text-align: center; width: 200px !important;" class="hasTooltip2">
+                                        Costo Planificado
+                                        <span>Hrs Estimadas * Costo/Hora Estimado</span>
+                                      </th>
+                                        <th *ngFor="let item of listhoras; let i = index"
+                                        style="text-align: center; width: 200px !important;">   
+                                          {{listCostoPlanificado[i]}}                                                                                      
+                                        </th>
+                                    </tr>
+                                    <tr>
+                                      <th style="text-align: center; width: 200px !important;" class="hasTooltip2">
+                                        Costo Real
+                                        <span>Hrs Registradas * Costo/Hora Real</span>
+                                      </th>
+                                        <th *ngFor="let item of listhoras; let i = index"
+                                        style="text-align: center; width: 200px !important;">   
+                                          {{listCostoReal[i]}}                                                                                      
+                                        </th>
+                                    </tr>
+                                    <tr>
+                                        <th style="text-align: center; width: 200px !important;">
+                                            Diferencia
+                                        </th>
+                                        <th *ngFor="let item of arrayNumberWeek; let e = index"
+                                        style="text-align: center; width: 200px !important;">
+                                            {{indicadorSemaforoNumber(e)}}  
+                                        </th>
+                                    </tr>   
+    
+                                    <tr>
+                                        <th style="text-align: center; width: 200px !important;">Indicador Semáforo</th>
+                                            <th *ngFor="let item of arrayNumberWeek; let e = index">
+                                            <div class="form-group text-left">
+                                                <div class="circulooo" [ngStyle]="{ 'background-color' : indicadorSemaforo(e)}" style="margin: auto;">
+                                                </div>
+                                            </div>
+                                        </th>
+                                    </tr>                  
+                                </tbody>
+                            </table>
+                            
+                        </div>
+                    </div>
+                </div>
+                <br>
+                <div class="form-group">
+                    <div class="col-md-12">
+                        <div class="table-responsive" >
+                            <table class="table table-striped table-bordered"
+                                style="table-layout: fixed;">
+                                <thead>
+                                    <tr>
+                                        <th style="text-align: center; width: 200px !important;">Avances (Horas)
+                                        </th>
+                                        <th *ngFor="let item of arrayNumberWeek; let i = index"
+                                            style="text-align: center; width: 80px !important;"
+                                            class="hasTooltip">
+                                            S{{i+1}}
+                                            <span>Fecha Inicio: {{listSemanasStart[i] | date: 'dd/MM/yyyy'}}</span>
+                                          </th>
+                                          
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td [attr.colspan]="(arrayNumberWeek.length + 1)" style="text-align: center;">PLANIFICADO</td>
+                                    </tr>
+                                    <tr *ngFor="let item of listProjectEstimate; let i = index">
+                                        <td style="text-align: center;"> {{item.sperson}} ( {{item.srol}} ) </td>
+                                        <td *ngFor="let item of FilterPersonWeek(item.nid_person); let i = index"  style="text-align: center;">
+                                            {{item.nhours_asigned}}
+                                        </td>
+                                    </tr>           
+                                    <td [attr.colspan]="(arrayNumberWeek.length + 1)" style="text-align: center;">REAL</td>
+                                    <tr *ngFor="let item of personHours; let i = index">
+                                        <td style="text-align: center;"> {{item[2]}} </td>
+                                        <td *ngFor="let item2 of item[1]; let i = index"  style="text-align: center;">
+                                            {{item2}}
+                                        </td>
+                                    </tr>    
+                                </tbody>
+                            </table>
+                            
+                        </div>
+                    </div>
+                </div>
+                <br>
+                <div class="col-lg-12">
+                    <div style="height: 500px;">
+                      <canvas id="barchart1">
+                      </canvas>
+                    </div>
+                </div>   
+                <br>  
+                <div class="col-lg-12">
+                    <div style="height: 500px;">
+                        <canvas id="chartCanvas"></canvas>
+                    </div>
+                    <br>
+
+                    <div class="table-responsive" style="padding: 30px;">
+                        <table class="table table-striped table-bordered"
+                            style="table-layout: fixed;">
+                            <thead>
+                                <tr>
+                                    <th scope="col" style="text-align: center">
+                                        Total Tareas
+                                    </th>
+                                    <th scope="col" style="text-align: center">
+                                        Tareas Terminadas
+                                    </th>
+                                    <th scope="col" style="text-align: center">
+                                        Tareas en Tiempo
+                                    </th>
+                                    <th scope="col" style="text-align: center">
+                                        Tareas Fuera de Tiempo
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <td style="text-align: center">{{cumplimiento_totalTareas}}</td>
+                                <td style="text-align: center">{{cumplimiento_tareasTerminadas}}</td>
+                                <td style="text-align: center">{{cumplimiento_tareasATiempo}}</td>
+                                <td style="text-align: center">{{cumplimiento_tareasFueraDeTiempo}}</td>
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div>    
+                <br>
+                 <div class="col-lg-12">
+                    <div style="height: 500px;">
+                        <canvas id="ganttChart"></canvas>
+                    </div>
+                 </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<ngx-spinner name="SpinnerProject" bdColor="rgba(51,51,51,0.8)" size="large" color="#fff" type="ball-spin-clockwise"
+    [fullScreen]="true">
+    <p style="color: white">Please Wait. </p>
+</ngx-spinner>

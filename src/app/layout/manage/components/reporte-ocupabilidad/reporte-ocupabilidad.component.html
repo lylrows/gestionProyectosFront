@@ -1,0 +1,192 @@
+<div class="app-content content bg-white">
+    <div class="content-wrapper">
+          <!-- INICIO Breadcrumbs -->
+          <div class="content-header row">
+            <div class="content-header-left col-md-6 col-12">
+              <h3 class="content-header-title">{{Title}}</h3>
+              <div class="row breadcrumbs-top">
+                <div class="breadcrumb-wrapper col-12">
+                  <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a routerLink="/manage/inicio">Inicio</a>
+                    </li>
+                    <li class="breadcrumb-item"><a routerLink="/manage/reporte-ocupabilidad">{{BreadLevel01}}</a>
+                    </li>
+                    <li class="breadcrumb-item active">{{Title}}
+                    </li>
+                  </ol>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="content-body">
+            <!-- INICIO DE FILTRO POR CATEGORIAS -->
+            <div class="row">
+              <div class="col-lg-12">
+                <div class="card">
+                  <div class="card-header">
+                    <h4 class="card-title">Perfil de usuario</h4>
+                    <a class="heading-elements-toggle"
+                      ><i class="la la-ellipsis-v font-medium-3"></i
+                    ></a>
+                  </div>
+  
+                  <div class="card-content collapse show">
+                    <div class="card-body">
+                      <form class="form-body">
+                        <div class="row">
+
+                          <div class="form-group col-md-2 col-sm-12">
+                            <label>Áreas</label>
+                            <select class="select2 form-control block" required
+                              name="nid_area"    
+                              [(ngModel)]="nid_area">
+                                <option value="0">-- Seleccione --</option>
+                                <option *ngFor="let item of listAreas" [value]="item.nid_mastertable_type">
+                                    {{item.sshort_value}}</option>
+                            </select>
+                        </div>
+
+                          <div class="form-grup col-md-3 col-sm-12">
+                            <label for="Estado">Perfil</label>
+                            <select
+                              class="select2 form-control block"
+                              #nid_perfil="ngModel"
+                              required
+                              id="nid_perfil"
+                              name="nid_perfil"
+                              [(ngModel)]="perfilSeleccionado"
+                            >
+                              <option value="0">-- Seleccione --</option>
+                              <optgroup label="Administrativo">
+                                <option *ngFor="let item of listProfileAdministrador" [value]="item.nid_mastertable" >
+                                  {{item.sshort_value}}
+                                </option>
+                              </optgroup>
+                              <optgroup label="Operativo">
+                                <option *ngFor="let item of listProfileOperativo" [value]="item.nid_mastertable" >
+                                  {{item.sshort_value}}
+                                </option>
+                              </optgroup>
+                              <optgroup label="Recursos Humanos">
+                                <option *ngFor="let item of listProfileRrhh" [value]="item.nid_mastertable" >
+                                  {{item.sshort_value}}
+                                </option>
+                              </optgroup>
+                            </select>
+                          </div>
+                          <div class="col-md-4 input-group" style="padding-top: 20px;">
+                            <input type="month" class="form-control" [(ngModel)]="date1String" style="margin-right: 15px;" name="date1Stringoc">
+                            <input type="month" class="form-control" [(ngModel)]="date2String"  name="date2Stringoc">
+                          </div>
+
+                        <div class="form-grup col-md-2 col-sm-12" style="padding-top: 15px;">
+                            <button type="button" class="btn btn-outline-info btn-active" (click)="search()">
+                              <i class="la la-search"></i>&nbsp;Consultar
+                            </button>
+                        </div>
+
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+  
+            <!-- INICIO DE LA LISTA DE HIJOS -->
+            <section>
+              <div class="row">
+                <div class="col-12">
+                  <div class="card">
+                    <div class="card-header">
+                          <h4 class="card-title">Personal</h4>
+                          <a class="heading-elements-toggle"
+                          ><i class="la la-ellipsis-v font-medium-3"></i
+                          ></a>
+                    </div>
+  
+                    <div class="card-content collapse show">
+                      <div class="card-body card-dashboard">
+                        <div>
+                          <div class="form-group"  >
+                            <div class="col-md-12">
+        
+                              <div class="table-responsive" style="overflow-x:auto;">
+                                <table class="table table-striped table-bordered" style="table-layout: fixed;"  #table>
+                                  <thead>
+                                    <tr>
+                                      <th scope="col" [attr.rowspan]="2" style="position: sticky; left: 0; text-align: center; width: 300px; background: #0C3454;">Personal</th>
+                                      <th [attr.colspan]="mes[2]" style="text-align: center;width: 1400px;" *ngFor="let mes of dias_meses; let i = index">
+                                        {{ titleTable(mes[0], mes[1])}}
+                                      </th>
+                                    </tr>
+                                    <tr>
+                                      <ng-container *ngFor="let mes of dias_meses; let i = index">
+                                        <ng-container *ngFor="let j of getRange(mes[2])">
+                                          <th style="text-align: center;width: 120px;">{{ j }}</th>
+                                        </ng-container>
+                                      </ng-container>
+                                    </tr>
+                                  </thead>
+                                  <div *ngIf="listEmployees.length > 0; then MostrarRegistro else NoexistenRegistro"></div>
+                                  <ng-template #NoexistenRegistro>
+                                    <tbody>
+                                      <tr>
+                                        <td colspan="1" style="text-align: center;">No se encontraron resultados para la
+                                          Búsqueda</td>
+                                      </tr>
+                                    </tbody>
+                                  </ng-template>
+                                  <ng-template #MostrarRegistro>
+                                    <tbody>
+                                      <ng-container *ngFor = "let employee of listEmployees; let i = index">
+                                        <tr>
+                                          <td style="position: sticky; left: 0; display: flex; justify-content: space-between; align-items: center; background-color: #f5f5f5; text-align: left;width: 300px;"> 
+                                            <!-- <div> -->
+                                              <i class="fa fa-user"></i> {{ employee[0].sperson }}
+                                            <!-- </div> -->
+                                            <a  title="Mostrar/Ocultar proyectos" (click)="toggleProjects(employee[0])" style="padding-left: 5px;"> 
+                                              <i class="la" [ngClass]="{'la-angle-down': !employee[0].showProjects, 'la-angle-up': employee[0].showProjects}"></i>
+                                            </a>
+                                          </td>
+                                          <ng-container *ngFor="let hour of arrayForPerson(employee[0].nid_person); let i = index;">
+                                            <td style="text-align: right ;width: 110px; "> <strong>{{hour| number:'1.2-2' }}</strong> </td>
+                                        </ng-container>
+                                        </tr>
+
+                                        <ng-container *ngIf="employee[0].showProjects" >
+                                          <tr *ngFor = "let projects of employee[1]; let j = index">
+                                            <td style="position: sticky; left: 0; background-color: #f5f5f5; text-align: left;width: 200px;">&nbsp;&nbsp; {{ projects.snameproject }} - {{projects.scodproject}}</td>
+
+                                            <ng-container *ngFor="let hour of arrayForPersonProject(employee[0].nid_person, projects.nid_project); let i = index;">
+                                                <td style="text-align: right ;width: 110px;"> {{hour | number:'1.2-2' }} </td>
+                                            </ng-container>
+                                            
+                                          </tr>
+                                        </ng-container>
+
+                                      </ng-container>
+                                    </tbody>
+        
+                                    <br>
+                                  </ng-template>
+                                </table>
+                              </div>
+                              
+                            </div>
+                            <br>
+                            <div class="col-md-12">
+                              <div class="chart" id="chart">
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </section>
+          </div>
+    </div>
+  </div>

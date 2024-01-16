@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 36 36">
+  <g fill="none" fill-rule="evenodd">
+    <path fill="#806EA0" d="M18,-4.54747351e-13 L18,-4.54747351e-13 C27.9411255,-4.56573506e-13 36,8.0588745 36,18 L36,18 C36,27.9411255 27.9411255,36 18,36 L18,36 C8.0588745,36 1.21743675e-15,27.9411255 0,18 L0,18 C-1.21743675e-15,8.0588745 8.0588745,-4.52921196e-13 18,-4.54747351e-13 Z" transform="rotate(-90 18 18)"/>
+    <g transform="translate(6 6)">
+      <rect width="24" height="24" fill="#553D81" rx="12"/>
+      <text fill="#FFF" font-family="BlissPro-Bold, Bliss Pro" font-size="10.8" font-weight="bold" letter-spacing=".203">
+        <tspan x="9.024" y="16">4</tspan>
+      </text>
+    </g>
+  </g>
+</svg>

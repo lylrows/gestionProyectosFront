@@ -1,0 +1,304 @@
+<div class="modal-header">
+    <h4 class="modal-title">{{titleProjectModal}}</h4>
+</div>
+<br>
+<div class="modal-body">
+    <div class="container text-center">
+      <div class="form-group">
+          <div class="row">
+              <div class="col-12">
+                  <div class="form-body">
+                      <div class="row">
+                          <div class="form-group text-left col-md-3 col-sm-12">
+                              <h5 style="text-align: center;">Rol Solicitado</h5>
+                          </div>
+                          <div class="form-group text-left col-md-3 col-sm-12">
+                              <h5 style="text-align: center;">Personal</h5>
+                          </div>
+                          <div class="form-group text-left col-md-6 col-sm-12">
+                              <h5 style="text-align: center;">Tiempo</h5>
+                          </div>
+                      </div>
+                      <div *ngFor="let item of listProjectEstimate; let i = index">
+                          <div class="row">
+                              <div class="form-group text-left col-md-3 col-sm-12">
+                                  <div class="vertical-center">
+                                      <h6 style="text-align: left;">{{item.srol}}</h6>
+                                  </div>
+                              </div>
+                              <div class="form-group text-left col-md-3 col-sm-12">
+                                  <div class="vertical-center">
+                                      <select class="select2 form-control block" required
+                                          [(ngModel)]="item.nid_person" (change)="changePerson(item)">
+                                          <option value="0">-- Seleccione --</option>
+                                          <option *ngFor="let item2 of PersonDropDownList" [value]="item2.code">
+                                              {{item2.description}}</option>
+                                      </select>
+                                  </div>
+                              </div>
+                              <div class="form-group text-left col-md-3 col-sm-12">
+                                  <label>Fecha Inicio</label>
+                                  <input type="date" name="" id="" min="projectStep2.dbegin_date"
+                                      max="projectStep2.dfinish_date" class="form-control"
+                                      [(ngModel)]="item.dstart_date">
+                              </div>
+                              <div class="form-group text-left col-md-3 col-sm-12">
+                                  <label>Fecha Fin</label>
+                                  <input type="date" name="" id="" class="form-control"
+                                      [(ngModel)]="item.dend_date">
+                              </div>
+                          </div>
+                      </div>
+                      <div class="row">
+                          <div class="col-sm-9"></div>
+                          <div class="col-sm-3">
+                              <button *ngIf="!projectDisable" class="btn btn-outline-info btn-active" (click)="saveEstimate()">
+                                  <i class="la la-save"></i>&nbsp;Guardar y Agregar
+                              </button>
+                          </div>
+                      </div>
+                      <hr>
+                      <!--Autcompletado horas-->
+                      <div *ngIf="autocompletadoFlag" class="row">
+                        <div class="form-group col-md-3 col-sm-12">
+                            <label>Persona</label>
+                            <select class="form-control" [(ngModel)]="selectedPersonId">
+                                <option  disabled="true" [selected]="true">--Seleccione--</option>
+                              <option *ngFor="let item5 of listProjectEstimate" [value]="item5.nid_person">{{item5.sperson}}</option>
+                            </select>
+                          </div>
+                    
+                        <div class="form-group col-md-2 col-sm-12">
+                          <label>Horas</label>
+                          <input type="number" class="form-control" [(ngModel)]="totalHours" min="0"
+                          onkeydown="return event.key !== 'e'&& event.key !== 'E' && event.key !== '+' && event.key !== '-'&& event.key !== '.'"
+                          (change)="totalHours < 0 ? totalHours = 0 : totalHours;">
+                        </div>
+                    
+                        <div class="form-group col-md-2 col-sm-12">
+                          <label>Inicio</label>
+                          <select class="form-control" [(ngModel)]="startIndex">
+                            <option *ngFor="let item of ReturnArrayWeeks(); let i = index" [value]="i">S{{i+1}}</option>
+                          </select>
+                        </div>
+                    
+                        <div class="form-group col-md-2 col-sm-12">
+                          <label>Fin</label>
+                          <select class="form-control" [(ngModel)]="endIndex">
+                            <option *ngFor="let item of ReturnArrayWeeks(); let i = index" [value]="i">S{{i+1}}</option>
+                          </select>
+                        </div>
+                        <div class="form-group col-md-3 col-sm-12">
+                            <label>&nbsp;</label>
+                            <div class="form-actions">
+                              <button type="button" class="btn btn-outline-info btn-active"  (click)="autocompleteHours()">
+                                <i class="la la-file-o"></i>&nbsp;Autocompletar
+                              </button>
+                            </div>
+                         </div>
+                    </div>
+                    
+                      <div class="row" style="padding-top: 5px;">
+                          <div class="form-group text-left col-md-3 col-sm-12">
+                          </div>
+                          <div class="form-group text-left col-md-3 col-sm-12">
+                              <label for="ncantidadsemanas"><b>Cantidad de Semanas</b></label>
+                              <input type="number" name="ncantidadsemanas" id="ncantidadsemanas"
+                                  class="form-control" [(ngModel)]="ncantidadsemanas" readonly>
+                          </div>
+                          <div class="form-group text-left col-md-3 col-sm-12">
+                              <label for="ncantidadsemanas"><b>F.Inicio Proyecto</b></label>
+                              <input type="date" name="ncantidadsemanas" id="ncantidadsemanas"
+                                  class="form-control" [(ngModel)]="projectStep2.dbegin_date" readonly>
+                          </div>
+                          <div class="form-group text-left col-md-3 col-sm-12">
+                              <label for="ncantidadsemanas"><b>F.Fin Proyecto</b></label>
+                              <input type="date" name=" " id=" "
+                                  class="form-control" [(ngModel)]="projectStep2.dfinish_date" readonly>
+                          </div>
+                      </div>
+  
+                      <div class="row" style="overflow: auto !important;">
+                          <div class="form-group">
+                              <div class="col-md-12">
+                                  <div class="table-responsive" *ngIf="viewWeek">
+                                      <table class="table table-striped table-bordered"
+                                          style="table-layout: fixed;">
+                                          <thead>
+                                              <tr>
+                                                  <th style="text-align: center; width: 200px !important;">Equipo
+                                                  </th>
+                                                  <th *ngFor="let item of ReturnArrayWeeks(); let i = index"
+                                                      style="text-align: center; width: 60px !important;">S
+                                                      {{i+1}}</th>
+                                                  <th style="text-align: center; width: 60px !important;">Total
+                                                  </th>
+  
+                                              </tr>
+                                          </thead>
+                                          <tbody>
+                                              <tr *ngFor="let item of listProjectEstimate; let i = index">
+                                                  <td>{{item.sperson}} ( {{item.srol}} )</td>
+                                                  <td
+                                                      *ngFor="let item of FilterPersonWeek(item.nid_person); let i = index">
+                                                      <input type="number"
+                                                          class="form-control" [(ngModel)]="item.nhours_asigned"
+                                                          onkeydown="return event.key !== 'e'&& event.key !== 'E' && event.key !== '+' && event.key !== '-'&& event.key !== '.'"
+                                                          (change)="ChangeTotal(item)"
+                                                          >
+                                                      
+                                                  </td>
+                                                  <td>{{totalxPerson(item.nid_person)}}</td>
+                                              </tr>
+                                              <tr>
+                                                  <td><b>Total</b></td>
+                                                  <td *ngFor="let item of ReturnArrayWeeks(); let i = index">
+                                                      {{totalxweek(i+1)}}
+                                                  </td>
+                                              </tr>
+                                          </tbody>
+                                      </table>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                      <hr>
+                      <div style="padding-top: 5px; width: 350px;text-align:center;">
+                          <h5><b>LEYENDA</b></h5>
+                          <h6>Total de Horas Planificadas: {{n_totalhours}}</h6>
+                          <br>
+                          <div class="table-responsive"  *ngIf="viewWeek">
+                              <table class="table table-striped table-bordered"
+                                  style="table-layout: fixed;">
+                                  <thead>
+                                      <tr>
+                                          <th colspan="2">CANTIDAD DE HORAS POR ROL</th>
+                                      </tr>
+                                      <tr>
+                                          <th scope="col" style="text-align: center">
+                                              Rol
+                                          </th>
+                                          <th scope="col" style="text-align: center">
+                                              Cant. Horas
+                                          </th>
+                                      </tr>
+                                  </thead>
+                                  <tbody>
+                                      <tr *ngFor="let t of projectStep3.listInvestment">
+                                          <td>{{t.snamerol}}</td>
+                                          <td>{{t.nhours_assgined}}</td>
+                                      </tr>
+                                  </tbody>
+                              </table>
+                          </div>
+      
+                      </div>
+                      <hr>
+                      <!-- Lista de Auxiliares -->
+                      <div style="margin-top: 10px;">
+                          <h4><b> PERSONAL AUXILIAR </b></h4>
+                          <div class="row">
+                              <div class="form-group text-left col-md-2 col-sm-12">
+                                  <h5 style="text-align: center;">Rol Solicitado</h5>
+                              </div>
+                              <div class="form-group text-left col-md-3 col-sm-12">
+                                  <h5 style="text-align: center;">Personal</h5>
+                              </div>
+                              <div class="form-group text-left col-md-5 col-sm-12">
+                                  <h5 style="text-align: center;">Tiempo</h5>
+                              </div>
+                          </div>
+                          <div *ngFor="let item of listProjectEstimateAuxiliary; let i = index">
+                              <div class="row">
+                                  <!-- <div class="form-group text-left col-md-3 col-sm-12">
+                                      <div class="vertical-center">
+                                          <h6 style="text-align: left;">{{item.srol}}</h6>
+                                      </div>
+                                  </div> -->
+                                  <div class="form-group text-left col-md-2 col-sm-12">
+                                      <div class="vertical-center">
+                                          <select class="select2 form-control block" [(ngModel)]="item.nid_rol">
+                                              <option value="0" checked>-- Seleccione --</option>
+                                              <option *ngFor="let item of listRoles" [value]="item.nid_mastertable_type" >
+                                                {{item.sshort_value}}</option>
+                                              <!-- <span class="mensaje-error-control">El campo Cliente es obligatorio</span> -->
+                                            </select>
+                                      </div>
+                                    </div>
+  
+                                  <div class="form-group text-left col-md-3 col-sm-12">
+                                      <div class="vertical-center">
+                                          <select class="select2 form-control block" name="list i" id=i required
+                                          [(ngModel)]="item.nid_person" (change)="changePerson(item)">
+                                          <option value="0">-- Seleccione --</option>
+                                          <option *ngFor="let item of PersonDropDownList" [value]="item.code">
+                                              {{item.description}}</option>
+                                      </select>
+                                      </div>    
+                                  </div>
+                                  <div class="form-group text-left col-md-3 col-sm-12">
+                                      <label>Fecha Inicio</label>
+                                      <input type="date" name="" id="" min="projectStep2.dbegin_date"
+                                          max="projectStep2.dfinish_date" class="form-control"
+                                          [(ngModel)]="item.dstart_date">
+                                  </div>
+                                  <div class="form-group text-left col-md-3 col-sm-12">
+                                      <label>Fecha Fin</label>
+                                      <input type="date" name="" id="" class="form-control"
+                                          [(ngModel)]="item.dend_date">
+                                  </div>
+                                  <div  class="form-group text-left col-md-1 col-sm-12">
+                                      <div class="vertical-center">
+                                          <a
+                                          *ngIf="!projectDisable"
+                                          title="Eliminar"
+                                          (click)="eliminarAuxiliar(item, i)"
+                                        >
+                                          <i class="fas fa-trash"></i
+                                        ></a>
+                                      </div>
+                                  </div>
+                              </div>
+                          </div>
+                          <div class="row">
+                              <div class="col-sm-6"></div>
+                              <div  class="col-sm-3">
+                                  <button *ngIf="!projectDisable" class="btn btn-outline-info btn-active" (click)="agregarAuxiliar()">
+                                      <i class="la la-user-plus" style="margin-left: -8px;"></i>&nbsp; Agregar Auxiliar
+                                  </button>
+                              </div>
+                              <div class="col-sm-3">
+                                  <button *ngIf="!projectDisable" class="btn btn-outline-info btn-active" (click)="saveAuxiliar(1)">
+                                      <i class="la la-save"></i>&nbsp; Guardar Auxiliar
+                                  </button>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+          <hr>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <div class="container">
+        <div class="row mt-2 text-center">
+            <div class="col-sm-3"></div>
+            <div class="col-sm-3">
+                <button *ngIf="!projectDisable" class="btn btn-outline-info btn-active" (click)="saveWeekPerson()">
+                    <i class="la la-save"></i>&nbsp;Guardar
+                </button>
+            </div>
+            <div class="col-sm-3">
+                <button (click)="closeModal()" class="btn btn-outline-info btn-active">
+                    <i class="la la-close"></i>&nbsp;Cerrar
+                </button>
+            </div>
+            <div class="col-sm-3"></div>
+        </div>
+    </div>
+  </div>
+  <ngx-spinner name="SpinnerProject" bdColor="rgba(51,51,51,0.8)" size="large" color="#fff" type="ball-spin-clockwise" [fullScreen] = "true">
+    <p style="color: white">Please Wait. </p>  
+ </ngx-spinner>

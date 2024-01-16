@@ -1,0 +1,42 @@
+.hasTooltip span {
+    display: none;
+    color: #000;
+    text-decoration: none;
+    padding-top : 3px;
+    padding-bottom : 3px;
+}
+
+.hasTooltip:hover span {
+    display: block;
+    position: absolute;
+    background-color: #FFF;
+    border: 1px solid #CCC;
+    margin-top: 2px;
+    margin-left: -47px;
+}
+
+.hasTooltip2 span {
+    display: none;
+    color: #000;
+    text-decoration: none;
+    padding-top : 3px;
+    padding-bottom : 3px;
+}
+
+.hasTooltip2:hover span {
+    display: block;
+    position: absolute;
+    background-color: #FFF;
+    border: 1px solid #CCC;
+    margin-top: 2px;
+    margin-left: 50px;
+}
+
+.circulooo{
+    width: 30px;
+    height: 30px;
+    -moz-border-radius: 50%;
+    -webkit-border-radius: 50%;
+    border-radius: 50%;
+    background: hsl(120, 10%, 96%);
+}

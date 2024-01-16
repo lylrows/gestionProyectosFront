@@ -1,0 +1,9 @@
+.caucion {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+nav {
+    border-bottom: #00B0E0 1px solid;
+}

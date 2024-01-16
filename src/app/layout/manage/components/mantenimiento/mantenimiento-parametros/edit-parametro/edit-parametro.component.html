@@ -1,0 +1,53 @@
+<div class="modal-body">
+
+  <form class="form-horizontal" autocomplete="false">
+
+    <div class="row">
+      <div class="col-md-6">
+        <div *ngIf="parametro.nid_father == 0" class="form-group">
+          <label>Descripcion</label>
+          <input type="text" id="sdescription_value" name="sdescription_value" class="form-control" [(ngModel)]="parametro.sdescription_value"/>
+        </div>
+        <div *ngIf="parametro.nid_father != 0" class="form-group">
+          <label>Descripcion</label>
+          <input type="text" id="sshort_value" name="sshort_value" class="form-control" [(ngModel)]="parametro.sshort_value"/>
+        </div>
+        <div *ngIf="parametro.nid_father == 14" class="form-group">
+          <label>Valor</label>
+          <input type="number" id="saux01" name="saux01" class="form-control" [(ngModel)]="parametro.saux01"
+          (keypress)="currencyCheck($event, parametro.saux01)"
+          onkeydown="return event.key !== 'e'&& event.key !== 'E' && event.key !== '+' && event.key !== '-'"/>
+        </div>
+        <div *ngIf="parametro.nid_father == 51" class="form-group">
+          <label>Valor</label>
+          <input type="text" id="saux01" name="saux01" class="form-control" [(ngModel)]="parametro.saux01"
+          (keypress)="currencyCheck($event, parametro.saux01)"/>
+        </div>
+        <!-- <div *ngIf="parametro.nid_father == 32" class="form-group">
+          <label>Ingrese nombre de puesto para inicializar nueva categoría de puesto:</label>
+          <input type="text" name="parametroHijo" class="form-control" [(ngModel)]="parametroHijo.sdescription_value"/>
+        </div> -->
+      </div>
+      <div class="col-md-3">
+          <button
+          (click)="actualizarParametros()"
+          class="btn btn-outline-info btn-block btn-active margin-button"
+          data-dismiss="modal"
+          style="margin-top: 20px"
+          >
+          {{tituloBoton}}
+        </button>
+      </div>
+      <div class="col-md-3">
+        <button (click)="closeModal()" class="btn btn-outline-info btn-active" style="margin-top: 20px">
+          <!-- <i class="la la-close"></i>&nbsp; -->
+          Cancelar
+        </button>
+    </div>
+    </div>
+
+  </form>
+</div>
+<ngx-spinner name="SpinnerProject" bdColor="rgba(51,51,51,0.8)" size="large" color="#fff" type="ball-spin-clockwise" [fullScreen] = "true">
+  <p style="color: white">Please Wait. </p>  
+</ngx-spinner>

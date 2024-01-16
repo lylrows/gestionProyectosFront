@@ -1,0 +1,104 @@
+<div class="modal-header">
+  <h4 class="modal-title">{{titleProjectModal}}</h4>
+</div>
+<div class="modal-body">
+  <div class="container text-center container-modal sin-padding">
+    <h2>{{tituloProject}}</h2>
+    <br>
+    <div class="form-horizontal">
+      <br>
+      <div class="form-group">
+        <div class="col-md-12 sin-padding">
+          <div class="table-responsive">
+            <table class="table table-striped table-bordered" style="table-layout: fixed;">
+              <thead>
+                <tr>
+                  
+                 
+                  <th scope="col" style="text-align: center">N° Hito</th>              
+                  <th scope="col" style="text-align: center">Descripción</th>
+                  <th scope="col" style="text-align: center">Fecha planificada</th>
+                  <th scope="col" style="text-align: center">% a facturar</th>
+                  <th scope="col" style="text-align: center">Monto (sin igv)</th>
+                  <th scope="col" style="text-align: center; width: 70px;">Facturado</th>
+                  <th scope="col" style="text-align: center;  width: 70px;">Pagado</th>
+                  <th scope="col" style="text-align: center">Monto facturado</th>
+                  <th scope="col" style="text-align: center">Fecha facturación</th>
+                  <th scope="col" style="text-align: center">Fecha pago factura</th>
+                  
+                </tr>
+              </thead>
+              
+              <tbody>
+                  <tr  *ngFor="let item of listProjectInvoicing; let i = index" >
+                    
+                    <td style="text-align: center">{{item.nmilestone}}</td>
+                    <td style="text-align: center">{{item.sdescription}}</td>
+                    <td style="text-align: center">{{item.dplanned_date| date: "dd/MM/yyyy"}}</td>
+                    <td style="text-align: center">{{item.npercentage_invoice}}</td>
+                    <td style="text-align: center">{{(projectStep2.nexpected_income *item.npercentage_invoice)/100 | number:'1.2-2'}} </td>
+                    <td style="text-align: center; width: 70px;">
+                      <div class="custom-control custom-switch">
+                        <input type="checkbox" class="custom-control-input" [id]="i + 'facturado'" [(ngModel)]="item.binvoiced"(blur)="Validate2(i)" (change)="MontoFacturado(i)">
+                        <label class="custom-control-label" [for]="i + 'facturado'"></label>
+                      </div></td>
+                    <td style="text-align: center; width: 70px;">
+                      <div class="custom-control custom-switch" >
+                        <input type="checkbox" class="custom-control-input" [id]="i + 'pagado'" [(ngModel)]="item.bpaid"(blur)="Validate(i)">
+                        <label class="custom-control-label" [for]="i + 'pagado'"></label>
+                      </div>
+                    </td>
+                    <td style="text-align: center" >
+                      <div *ngIf="item.binvoiced">
+                        {{(projectStep2.nexpected_income *item.npercentage_invoice)/100 | number:'1.2-2'}}
+                      </div>
+                      <!-- <input type="number" name="" id="" class="form-control" [(ngModel)]="item.nbilled_amount" maxlength="10"> -->
+                    </td>
+                    <td style="text-align: center">
+                      <input type="date" name="" id="" class="form-control" [(ngModel)]="item.dbilling_date">
+                    </td>
+                    <td style="text-align: center">
+                      <input type="date" name="" id="" class="form-control" [(ngModel)]="item.dinvoice_payment_date">
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>TOTAL</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td>{{projectStep2.ntotal_amount}}</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                  </tr>
+                </tbody>
+                <br>
+            </table>
+          </div>
+        </div>
+        
+      </div>
+
+    </div>
+  </div>
+</div>
+<div class="modal-footer">
+  <div class="container">
+    <div class="row mt-2 text-center">
+      <div class="col-md-3 col-sm-3"></div>
+      <div class="col-md-3 col-sm-12">
+          <button *ngIf="!projectDisable" class="btn btn-outline-info btn-active" (click)="SaveInvoicing()">
+            <i class="la la-save"></i>&nbsp;Guardar cambios
+          </button>
+      </div>
+      <div class="col-md-3 col-sm-3">
+        <button (click)="closeModal()" class="btn btn-outline-info btn-active">
+          <i class="la la-close"></i>&nbsp;Cerrar
+        </button>
+      </div>
+      <div class="col-md-3 col-sm-3"></div>
+    </div>
+  </div>
+</div>

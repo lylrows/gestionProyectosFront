@@ -1,0 +1,78 @@
+<div class="modal-header">
+    <h5 class="modal-title">Clientes</h5>
+    <div class="mb-1 row">
+      <div>
+          <button type="button" class="btn btn-outline" (click)="closeModal()">
+            <i class="la la-close"></i>
+          </button>
+      </div>
+    </div>
+</div>
+<div class="modal-body">
+    <div class="mb-1 row">
+      <label class="col-sm-4 col-form-label">Código</label>
+      <div class="col-sm-8">
+          <input [disabled]="true" type="number" class="form-control" [(ngModel)]="client.nid_client">
+      </div>
+    </div>
+    <div class="mb-1 row">
+        <label class="col-sm-4 col-form-label">Nombre(*)</label>
+        <div class="col-sm-8">
+            <input type="text" class="form-control" 
+            [(ngModel)]="client.sname"
+            oninput="this.value = this.value.toUpperCase()">
+            <small>Ejemplo: La Positiva</small>
+        </div>
+    </div>
+    <div class="mb-1 row">
+      <label class="col-sm-4 col-form-label">Nombre Comercial(*)</label>
+      <div class="col-sm-8">
+          <input type="text" class="form-control" 
+          #sbusinessname = "ngModel"
+          [(ngModel)]="client.sbusinessname"
+          oninput="this.value = this.value.toUpperCase()">
+          <small>Ejemplo: LA POSITIVA SEGUROS Y REASEGUROS S.A.A.</small>
+      </div>
+    </div>
+    <div class="mb-1 row">
+      <div class="col-sm-3">
+          <button type="button" class="btn btn-outline-info btn-active" (click)="saveClient()">{{buttonTittle}}</button>
+      </div>
+      <div class="col-sm-3">
+        <button type="button" class="btn btn-outline-info btn-active" (click)="clean()">Limpiar</button>
+      </div>
+    </div>
+    <table class="table table-striped table-bordered">
+        <thead>
+          <tr>
+            <th scope="col">N°</th>
+            <th scope="col">Descripción</th>
+            <th scope="col">Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of ClientDropDownList; let i = index">
+            <th scope="row">{{i+1}}</th>
+            <td>{{item.sname}} - {{item.sbusinessname}}</td>
+            <td>
+              <a title="Editar" (click)="editClient(item)"> <i
+                class="la la-edit"></i> </a>
+              <a title="Deshabilitar"
+                (click)="deleteClient(item)"
+              >
+                <i class="la la-ban"></i
+              ></a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+</div>
+<div class="modal-footer">
+  <div class="mb-1 row">
+    <div style="padding-right: 100px;">
+        <button type="button" class="btn btn-outline-info btn-active" (click)="closeModal()">
+          <i class="la la-close"></i>Cerrar
+        </button>
+    </div>
+  </div>
+</div>

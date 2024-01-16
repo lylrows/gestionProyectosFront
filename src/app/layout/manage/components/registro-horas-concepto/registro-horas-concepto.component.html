@@ -1,0 +1,155 @@
+<div class="modal-body">
+  <!-- INICIO Filtro -->
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="card">
+        <div class="card-header">
+          <h4 class="card-title"> Detalle del registro de hora </h4>
+          <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
+        </div>
+        <div class="card-content collapse show">
+          <div class="card-body">
+            <div class="form-body">
+              <div class="row">
+                
+                <div class="form-group col-md-10 col-sm-12">
+                  <label >Colaborador </label>
+                  <select class="select2 form-control block"   required [(ngModel)]="projectHoursLog.nid_person" >
+                    <option value="0">-- Seleccione --</option>
+                    <option *ngFor="let item of PersonDropDownList" [value]="item.code">
+                      {{item.description}}</option>
+                  </select>
+                </div>
+                <div class="form-group col-md-5 col-sm-12">
+                  <label >Cantidad de horas</label>
+                  <input type="number" name="" id="" class="form-control" [(ngModel)]="projectHoursLog.nnumber_hours" pattern="[0-9]">
+                </div>
+
+                <div class="form-group col-md-5 col-sm-12">
+                  <label >Fecha de registro</label>
+                  <input type="date" name="" id="" class="form-control" [(ngModel)]="projectHoursLog.dregistration_date">
+                </div>
+                <div class="form-group col-md-2 col-sm-12">
+                  <label>&nbsp;</label>
+                  <div class="form-actions">
+                    <button type="button" class="btn btn-outline-info btn-active"  (click)="saveHoursLog()">
+                      <i class="la la-file-o"></i>&nbsp;{{tituloBoton}}
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- FIN Filtro -->
+  <section id="configuration">
+    <div class="row">
+      <div class="col-12">
+        <div class="card">
+          <div class="card-header">
+            <h4 class="card-title">Resumen Histórico de Marcaciones</h4>
+            <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
+          </div>
+          <div class="card-content collapse show">
+            <div class="card-body card-dashboard">
+              <div class="row">
+                
+                <div class="form-group">
+                  <div class="col-md-12">
+                    <div class="table-responsive">
+                      <table class="table table-striped table-bordered" style="table-layout: fixed;">
+                        <thead>
+                          <tr>
+                            <th class="width-6" scope="col" style="text-align: center">ID registro</th>              
+                            <th class="width-6" scope="col" style="text-align: center">Nombre</th>
+                            <th class="width-6" scope="col" style="text-align: center">Fecha R.</th>
+                            <th class="width-6" scope="col" style="text-align: center">Cantidad Horas</th>
+                            <th class="width-6" scope="col" style="text-align: center">Categoría</th>
+                            <th class="width-6" scope="col" style="text-align: center">Acciones</th>
+                          </tr>
+                        </thead>
+                        <div *ngIf="!thereAreProjectsLoad(); then NoexistenRegistro  else MostrarRegistro"></div>
+                        <ng-template #NoexistenRegistro>
+                          <tbody>
+                            <tr>
+                              <td colspan="8" style="text-align: center;">No se encontraron resultados para la
+                                Búsqueda</td>
+                            </tr>
+                          </tbody>
+                        </ng-template>
+                        <ng-template #MostrarRegistro>
+                          <tbody>
+                            <tr  *ngFor="let item of listProjectHoursLog; let i = index" >
+                              <td >{{i+1}}</td>
+                              <td >{{item.sperson}}</td>
+                              <td >{{item.dregistration_date}}</td>
+                              <td >{{item.nnumber_hours}}</td>
+                              <td >{{item.sdescription}}</td>
+                              <td > 
+                                <a  title="Editar" (click)="EditHoursLog(item)"> <i
+                                  class="la la-edit"></i> </a>
+                              <a    title="Eliminar" (click)="DelHoursLog(item)"> <i
+                                  class="la la-ban"></i></a>
+                              </td>
+                            </tr>
+                          </tbody>
+                          <br>
+                        </ng-template>
+                      </table>
+                    </div>
+                  </div>
+                  <div class="col-md-12">
+                    <div class="row">
+                      <label class="col-md-2">Registros por Página</label>
+                      <div class="col-md-2">
+                        <select class="select2 form-control input-sm" (change)="ChangeRecordByPage()"
+                          [(ngModel)]="itemsPerPage">
+                          <option value=5>5</option>
+                          <option value=10>10</option>
+                          <option value=15>15</option>
+                          <option value=20>20</option>
+                        </select>
+                      </div>
+                      <div class="col-md-8">
+                        <div class="d-flex justify-content-end">
+                          
+                          <ngb-pagination [collectionSize]="totalItems" [pageSize]="itemsPerPage"
+                            [(page)]="currentPage" [rotate]="true" (pageChange)="pageChanged($event)">
+                          </ngb-pagination>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+  </section>
+  <!-- FIN Tabla Tabla Listado de Errores -->
+</div>
+<div class="modal-footer">
+  <div class="container">
+    <div class="row mt-2 text-center">
+      <div class="col-md-9 col-sm-6"></div>
+      
+      <div class="col-md-3 col-sm-6">
+        <button (click)="closeModal()" class="btn btn-outline-info btn-active">
+          <i class="la la-close"></i>&nbsp;Cerrar
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<iframe id="ifrmTemplate" name="ifrmTemplate" style="display: none;"></iframe>
+<a id="afile" name="afile" style="display: none;"></a>
+
+<ngx-spinner></ngx-spinner>

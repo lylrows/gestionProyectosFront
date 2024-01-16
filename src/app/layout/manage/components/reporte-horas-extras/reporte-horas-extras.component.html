@@ -1,0 +1,215 @@
+<div class="app-content content bg-white">
+    <div class="content-wrapper">
+        <!-- INICIO Breadcrumbs -->
+        <div class="content-header row">
+            <div class="content-header-left col-md-6 col-12">
+                <h3 class="content-header-title">{{Title}}</h3>
+                <div class="row breadcrumbs-top">
+                    <div class="breadcrumb-wrapper col-12">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a routerLink="/manage/inicio">Inicio</a>
+                            </li>
+                            <li class="breadcrumb-item"><a routerLink="/manage/registro-horas">{{BreadLevel01}}</a>
+                            </li>
+                            <li class="breadcrumb-item active">{{Title}}
+                            </li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- FIN Breadcrumbs -->
+        <div class="content-body">
+            <!-- INICIO Filtro -->
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4 class="card-title"> FILTROS </h4>
+                            <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
+                        </div>
+                        <div class="card-content collapse show">
+                            <div class="card-body">
+                                <div class="form-body">
+                                    <div class="row">
+                                        <!-- <div class="form-group col-md-2 col-sm-12">
+                                            <label>Código Proyecto </label>
+                                            <input type="text" name="" id="" class="form-control"
+                                                [(ngModel)]="filterProject.scodproject">
+                                        </div>
+                                        <div></div> -->
+                                        <ng-template #MostrarResponsable></ng-template>
+                                            <div class="form-group col-md-2 col-sm-12">
+                                                <label>Áreas</label>
+                                                <select class="select2 form-control block" required
+                                                    [(ngModel)]="nid_area">
+                                                    <option value="0">-- Seleccione --</option>
+                                                    <option *ngFor="let item of listAreas" [value]="item.nid_mastertable_type">
+                                                        {{item.sshort_value}}</option>
+                                                </select>
+                                            </div>
+                                        
+                                        <div class="form-group col-md-2 col-sm-12">
+                                            <label>Mes y Año</label>
+                                            <input type="month" class="form-control" [(ngModel)]="date1String" (change)="fecha()">
+                                        </div>
+                                        <!-- <div class="form-group col-md-4 col-sm-12">
+                                            <label> Cliente </label>
+                                            <select class="select2 form-control block" required
+                                                [(ngModel)]="filterProject.nid_client">
+                                                <option value="0">-- Seleccione --</option>
+                                                <option *ngFor="let item of ClientDropDownList"
+                                                    [value]="item.nid_client">
+                                                    {{item.sname}} - {{item.sbusinessname}}</option>
+                                                <span class="mensaje-error-control">El campo Cliente es
+                                                    obligatorio</span>
+                                            </select>
+                                        </div>
+
+                                        <div class="form-group col-md-2 col-sm-12">
+                                            <label> Estado </label>
+                                            <select class="select2 form-control block" required
+                                                [(ngModel)]="filterProject.nid_status">
+                                                <option value="0">-- Seleccione --</option>
+                                                <option *ngFor="let item of listState"
+                                                    [value]="item.nid_mastertable_type">
+                                                    {{item.sshort_value}}</option>
+                                            </select>
+                                        </div> -->
+
+                                        <div class="form-group col-md-2 col-sm-12">
+                                            <label>&nbsp;</label>
+                                            <div class="form-actions">
+                                                <button type="button" class="btn btn-outline-info btn-active"
+                                                    (click)="search()">
+                                                    <i class="la la-search"></i>&nbsp;Consultar
+                                                </button>
+                                            </div>
+                                        </div>
+                                        <!-- <div class="form-group col-md-2 col-sm-12">
+                        <label>&nbsp;</label>
+                        <div class="form-actions">
+                          <button type="button" class="btn btn-outline-info btn-active" (click)="print()">
+                            <i class="la la-print"></i>&nbsp;Exportar
+                          </button>
+                        </div>
+                      </div> -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- FIN Filtro -->
+            <section id="configuration">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <h4 class="card-title">Lista Colaboradores con Horas Extras</h4>
+                                <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
+                            </div>
+                            <div class="card-content collapse show">
+                                <div class="card-body card-dashboard">
+                                    <div class="row">
+
+                                        <div class="form-group" style="overflow-x:scroll;">
+                                            <div class="col-md-12">
+                                                <div class="table-responsive">
+                                                    <table class="table table-striped table-bordered"
+                                                        style="table-layout: fixed;max-width: 700px;">
+                                                        <thead>
+                                                            <tr>
+                                                                <th scope="col"
+                                                                    style="text-align: center;width: 250px;">Nombre Colaborador
+                                                                </th>
+                                                                <th scope="col"
+                                                                    style="text-align: center;width: 300px;">Área
+                                                                </th>
+                                                                <th scope="col"
+                                                                    style="text-align: center;width: 200px;">Mes
+                                                                </th>
+                                                                <th scope="col"
+                                                                    style="text-align: center;width: 110px;">Total
+                                                                </th>
+                                                                <th scope="col" 
+                                                                    style="text-align: center;width: 80px;">Acciones
+                                                                </th>
+                                                            </tr>
+                                                        </thead>
+                                                        <div
+                                                            *ngIf="!thereAreProjectsLoad(); then NoexistenRegistro  else MostrarRegistro">
+                                                        </div>
+                                                        <ng-template #NoexistenRegistro>
+                                                            <tbody>
+                                                                <tr>
+                                                                    <td colspan="6" style="text-align: center;">No se
+                                                                        encontraron resultados para la
+                                                                        Búsqueda</td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </ng-template>
+                                                        <ng-template #MostrarRegistro>
+                                                            <tbody>
+                                                                <tr *ngFor="let item of listReportHoursExt; let i = index">
+                                                                    <td style="text-align: center;">
+                                                                        {{item.sname}}</td>
+                                                                    <td style="text-align: center;">
+                                                                        {{item.sshort_value}}</td>
+                                                                    <td style="text-align: center;">
+                                                                        {{item.mes}}</td>
+                                                                    <td style="text-align: center;">
+                                                                        {{item.sumahoras}}
+                                                                    </td>
+                                                                    <td style="text-align: center;">
+                                                                        <a title="Reporte Horas Extras" (click)="abrirReporteHorasExtras(item)"> 
+                                                                            <i class="la la-edit"></i>
+                                                                        </a>
+                                                                    </td>
+                                                                </tr>
+                                                            </tbody>
+                                                            <br>
+                                                        </ng-template>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                            <!-- <div class="col-md-12">
+                                                <div class="row">
+                                                    <label class="col-md-1">Registros por Página</label>
+                                                    <div class="col-md-1">
+                                                        <select class="select2 form-control input-sm"
+                                                            (change)="ChangeRecordByPage()" [(ngModel)]="itemsPerPage">
+                                                            <option value=5>5</option>
+                                                            <option value=10>10</option>
+                                                            <option value=15>15</option>
+                                                            <option value=20>20</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="col-md-10">
+                                                        <div class="d-flex justify-content-end">
+                                                            <ngb-pagination [collectionSize]="totalItems"
+                                                                [pageSize]="itemsPerPage" [(page)]="currentPage"
+                                                                [rotate]="true" (pageChange)="pageChanged($event)">
+                                                            </ngb-pagination>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div> -->
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <!-- FIN Tabla Tabla Listado de Errores -->
+        </div>
+    </div>
+</div>
+<iframe id="ifrmTemplate" name="ifrmTemplate" style="display: none;"></iframe>
+<a id="afile" name="afile" style="display: none;"></a>
+
+
+<ngx-spinner type="ball-scale-multiple"></ngx-spinner>

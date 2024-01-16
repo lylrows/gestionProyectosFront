@@ -1,0 +1,221 @@
+<div class="app-content content bg-white">
+  <div class="content-wrapper">
+    <!-- INICIO Breadcrumbs -->
+    <div class="content-header row">
+      <div class="content-header-left col-md-6 col-12">
+        <h3 class="content-header-title">{{Title}}</h3>
+        <div class="row breadcrumbs-top">
+          <div class="breadcrumb-wrapper col-12">
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item"><a routerLink="/manage/inicio">Inicio</a>
+              </li>
+              <li class="breadcrumb-item"><a routerLink="/manage/indicador-gestion">{{BreadLevel01}}</a>
+              </li>
+              <li class="breadcrumb-item active">{{Title}}
+              </li>
+            </ol>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- FIN Breadcrumbs -->
+    <div class="content-body">
+      <div class="row ">
+        <div class="col-lg-12">
+          <div class="card">
+            <div class="card-header">
+              <h4 class="card-title"> FILTROS </h4>
+              <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
+            </div>
+
+            <tbody>
+              <tr>
+                <div class="card-content collapse show">
+                  <div class="card-body">
+                    <div class="form-body">
+                      <div class="row">
+                        <div class="form-group col-md-2 col-sm-12">
+                          <label>Código Servicio </label>
+                          <input type="text" name="" id="" class="form-control" [(ngModel)]="filterProject.scodproject">
+                        </div>
+
+                        <div class="form-group col-md-2 col-sm-12">
+                          <label>Responsable Servicio</label>
+                          <select class="select2 form-control block" required [(ngModel)]="filterProject.nid_manager">
+                            <option value="0">-- Seleccione --</option>
+                            <option *ngFor="let item of PersonDropDownList" [value]="item.code">
+                              {{item.description}}</option>
+                            <span class="mensaje-error-control">El campo Responsable Servicio es obligatorio</span>
+                          </select>
+                        </div>
+
+                        <div class="form-group col-md-2 col-sm-12">
+                          <label>Tipo Servicio </label>
+                          <select class="select2 form-control block" required
+                            [(ngModel)]="filterProject.nid_project_type">
+                            <option value="0">-- Seleccione --</option>
+                            <option *ngFor="let item of ProjectTypeDropDownList" [value]="item.code">
+                              {{item.description}}</option>
+
+                          </select>
+                        </div>
+
+                        <div class="form-group col-md-3 col-sm-12">
+                          <label> Cliente </label>
+                          <select class="select2 form-control block" required [(ngModel)]="filterProject.nid_client">
+                            <option value="0">-- Seleccione --</option>
+                            <option *ngFor="let item of ClientDropDownList" [value]="item.nid_client">
+                              {{item.sname}} - {{item.sbusinessname}}</option>
+                            <span class="mensaje-error-control">El campo Cliente es obligatorio</span>
+                          </select>
+                        </div>
+
+                        <div class="form-group col-md-2 col-sm-12">
+                          <label> Estado </label>
+                          <select class="select2 form-control block" required [(ngModel)]="filterProject.nid_status">
+                            <option *ngFor="let item of listState" [value]="item.nid_mastertable_type">
+                              {{item.sshort_value}}</option>
+                          </select>
+                        </div>
+
+                        <div class="form-group col-md-2 col-sm-12">
+                          <label>&nbsp;</label>
+                          <div class="form-actions">
+                            <button type="button" class="btn btn-outline-info btn-active" (click)="search()">
+                              <i class="la la-search"></i>&nbsp;Consultar
+                            </button>
+                          </div>
+                        </div>
+
+                        <div class="form-group col-md-2 col-sm-12">
+                          <label>&nbsp;</label>
+                          <div *ngIf="permisoExcel" class="form-actions">
+                            <button type="button" (click)="ExportToExcel()" class="btn " style="padding: 0; border: none;background: transparent;">
+                              <img style="width:24px;height: 24px; " src="../../../../../assets/images/icons/excel1.png" /> &nbsp;Exportar
+                            </button>
+                          </div>
+                        </div>
+
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </tr>
+            </tbody>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12">
+          <div class="card">
+            <div class="card-header">
+              <h4 class="card-title">Lista de Resultado</h4>
+              <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
+            </div>
+            <div class="card-content collapse show">
+              <div class="card-body card-dashboard">
+                <div class="row">
+                  
+                  <div class="form-group" style="overflow-x:scroll;">
+                    <div class="col-md-12">
+                      <div class="table-responsive">
+                        <table class="table table-striped table-bordered" style="table-layout: fixed;" #table>
+                          <thead>
+                            <tr>
+                              
+                             
+                              <th scope="col" style="text-align: center;width: 110px;">Responsable</th>              
+                              <th scope="col" style="text-align: center;width: 100px;">Codigo Proyecto</th>
+                              <th scope="col" style="text-align: center;width: 100px;">Cliente</th>
+                              <th scope="col" style="text-align: center;width: 150px;">Description</th>
+                              <th scope="col" style="text-align: center;width: 110px;">% Facturación</th>
+                              <th scope="col" style="text-align: center;width: 110px;">Hito</th>
+                              <th scope="col" style="text-align: center;width: 80px;">Moneda</th>
+                              <th scope="col" style="text-align: center;width: 80px;">Monto</th>
+                              <th scope="col" style="text-align: center;width: 80px;">Semáforo</th>
+                              <th scope="col" style="text-align: center;width: 80px;">Fch Planificada</th>
+                              <th scope="col" style="text-align: center;width: 80px;">Fch Fact</th>
+                              <th scope="col" style="text-align: center;width: 80px;">Fch Deposito</th>
+                              <th scope="col" style="text-align: center;width: 80px;">Estado</th>
+                              
+                            </tr>
+                          </thead>
+                          <div *ngIf="!thereAreProjectsLoad(); then NoexistenRegistro  else MostrarRegistro"></div>
+                          <ng-template #NoexistenRegistro>
+                            <tbody>
+                              <tr>
+                                <td colspan="11" style="text-align: center;">No se encontraron resultados para la
+                                  Búsqueda</td>
+                              </tr>
+                            </tbody>
+                          </ng-template>
+                          <ng-template #MostrarRegistro>
+                            <tbody >
+                              <tr  *ngFor="let item of listReporteFacturacion; let i = index">
+                                
+                                <td style="text-align: center;width: 110px;">{{item[0]}}</td>
+                                <td style="text-align: center;width: 110px;">{{item[1]}}</td>
+                                <td style="text-align: center;width: 110px;">{{item[2]}}</td>
+                                <td style="text-align: center;width: 110px;">{{item[3]}}</td>
+                                <td style="text-align: center;width: 110px;">{{item[5]}}</td>
+                                <td style="text-align: center;width: 110px;">{{item[4]}}</td>
+                                <td style="text-align: center;width: 110px;">{{ item[7] == 1? "Soles": "Dolares" }}</td>
+                                <td style="text-align: center;width: 110px;">{{item[8]}}</td>
+                                <td style="text-align: center;width: 110px;">
+                                  <div class="form-group text-left">
+                                    <div class="circulooo" [ngStyle]="{ 'background-color' : indicadorSemaforo(item)}" style="margin: auto;">
+                                    </div>
+                                  </div>
+                                </td>
+                                <td style="text-align: center;width: 110px;">{{item[6] | date: "dd/MM/yyyy"}}</td>
+                                <td style="text-align: center;width: 110px;">{{item[9] | date: "dd/MM/yyyy"}}</td>
+                                <td style="text-align: center;width: 110px;">{{item[10] | date: "dd/MM/yyyy"}}</td>
+                                <td style="text-align: center;width: 110px;">{{item[11]}}</td>
+                              </tr>
+                            </tbody>
+                            
+                            <br>
+                          </ng-template>
+                        </table>
+                      </div>
+                    </div>
+                    <!-- <div class="col-md-12">
+                      <div class="row">
+                        <label class="col-md-1">Registros por Página</label>
+                        <div class="col-md-1">
+                          <select class="select2 form-control input-sm" (change)="ChangeRecordByPage()"
+                            [(ngModel)]="itemsPerPage">
+                            <option value=5>5</option>
+                            <option value=10>10</option>
+                            <option value=15>15</option>
+                            <option value=20>20</option>
+                          </select>
+                        </div>
+                        <div class="col-md-10">
+                          <div class="d-flex justify-content-end">
+                            
+                            <ngb-pagination [collectionSize]="totalItems" [pageSize]="itemsPerPage"
+                              [(page)]="currentPage" [rotate]="true" (pageChange)="pageChanged($event)">
+                            </ngb-pagination>
+                          </div>
+                        </div>
+                      </div>
+                    </div> -->
+                  </div>
+                </div>
+
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ngx-spinner name="SpinnerProject" bdColor="rgba(51,51,51,0.8)" size="large" color="#fff" type="ball-spin-clockwise"
+  [fullScreen]="true">
+  <p style="color: white">Please Wait. </p>
+</ngx-spinner>
