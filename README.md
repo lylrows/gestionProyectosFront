@@ -1,4 +1,5 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 # PresentationPlataformaDigital
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 14.2.10.
@@ -26,6 +27,9 @@ Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To u
 ## Further help
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+=======
+# gestionProyectosFront
+>>>>>>> 9633d3f0e353a1db08311c7add01d5ee8ced0c07
 =======
 # gestionProyectosFront
 >>>>>>> 9633d3f0e353a1db08311c7add01d5ee8ced0c07
